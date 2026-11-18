@@ -1,0 +1,23 @@
+﻿Use cWebWidget.pkg
+
+Composite cSampleWidget is a cWebWidget
+    Property Boolean pbFilterable False
+    
+    { WebProperty=Server }
+    Property DateTime pdtStartDate
+    
+    { WebProperty=Server }
+    Property DateTime pdtEndDate
+       
+    //Procedure to allow updating through an internal or global filter, in this example only available if pbFilterable is True
+    Procedure Update
+    End_Procedure
+    
+    Procedure OnInitializeWidget
+        Send Update
+    End_Procedure
+    
+    Procedure OnWidgetPropsChanged
+        Send Update
+    End_Procedure
+End_Composite

@@ -1,0 +1,468 @@
+﻿Use cWebWidget.pkg
+Use cWebColumnImage.pkg
+Use ZoomSalesPerson.wo
+Use ZoomCustomer.wo
+Use ZoomInventory.wo
+Use cSampleWidget.pkg
+Use WidgetConfigList.wo
+Use cOrderHeaderDataDictionary.dd
+
+Struct tListData
+    String sID
+    Number nValue
+    Number nCompValue
+    String sName
+    String sAvatar
+    String sRowId
+End_Struct
+
+Composite cWidgetList is a cSampleWidget
+    Set piDefaultColSpan to 6
+    Set piDefaultRowSpan to 5
+    Set psWidgetName to "cWidgetList"
+    Set psWidgetCaption to "List Widget"
+    Set psWidgetDescription to "My custom widget"
+    Set piColumnCount to 8
+    Set pbScroll to True
+    Set pbShowCaption to False
+    Set phoConfigWizard to oWidgetConfigList
+    
+    Set pbFilterable to True
+    
+    { WebProperty=Server }
+    Property String psDataSet "SalesPersons"
+    
+    { WebProperty=Server }
+    Property String psSortType "Top"
+    
+    { WebProperty=Server }
+    Property String psMode "total"
+    
+    { WebProperty=Server }
+    Property Integer piLowInventoryAlertLevel 80
+    
+    Property tListData[] paListData
+    Set psRowHeights to "1/1fr"
+    
+    Object oOrder_DD is a cOrderHeaderDataDictionary
+
+        Procedure OnConstrain
+            DateTime dtStart dtEnd
+            
+            WebGet pdtStartDate of (Widget(Self)) to dtStart
+            WebGet pdtEndDate of (Widget(Self)) to dtEnd
+            
+            If (dtStart <> "" and dtEnd <> "") Begin
+                Constrain OrderHeader.Order_Date Between dtStart and dtEnd    
+            End
+        End_Procedure
+    End_Object
+    
+    Object oSalesPerson_DD is a cSalesPersonDataDictionary
+    End_Object
+    
+    Object oCustomer_DD is a cCustomerDataDictionary
+    End_Object
+    
+    Object oInventory_DD is a cInventoryDataDictionary
+    End_Object
+
+    Object oHeader is a cWebLabel
+        Set psCSSClass to "WidgetLabel"
+        Set psCaption to "List data" 
+        Set piColumnSpan to 0
+    End_Object
+    
+    Object oList is a cWebList
+        Set piColumnSpan to 12
+        Set pbShowHeader to False
+        Set pbServerOnRowClick to True
+        Set pbDataAware to False
+        Set pbAllowColumnHiding to False
+        Set pbAllowColumnReordering to False
+        Set pbColumnsResizable to False
+        Set pbShowSelected to False
+        Set psPlaceHolder to "No sales within the chosen time span"
+        Set pbFillHeight to True
+        Set pbScroll to False
+        
+       
+        Object oSalesPersonAvatar is a cWebColumnImage
+            Set psCSSClass to "ColImgRound"
+            Set piListColSpan to 1
+            Set pbImageByCSS to False
+            Set pbDynamic to True
+            Set piImageHeight to 42
+            Set piImageWidth to 42
+            Set peAlign to alignLeft
+            Set pePosition to wiCover
+            Set piWidth to 60
+            Set pbFixedWidth to True
+        End_Object
+        
+        Object oName is a cWebColumn
+            Set psCaption to "SalesPerson Name"
+        End_Object
+        
+        Object oTotalSales is a cWebColumn
+            Set psCaption to "Total Sales"
+            Set peAlign to alignRight
+        End_Object  
+        
+        Object oDifference is a cWebColumn
+            Set psCSSClass to "WidgetListDifferenceVal"
+            Set peAlign to alignRight
+        End_Object
+
+        // sMode = "total" or "difference"
+        // bTop = True for top N, False for bottom N
+        // iCount = how many results you want (e.g. 5)
+        Function SortData tListData[] aData String sMode Boolean bTop Integer iCount Returns tListData[]
+            Integer i j
+            tListData tmp
+            tListData[] aSorted
+            
+            Move aData to aSorted
+            
+            // Bubble sort
+            For i from 0 to (SizeOfArray(aSorted) - 2)
+                For j from i to (SizeOfArray(aSorted) - 1)
+            
+                    Number valueCurrent
+                    Number valueCompared
+            
+                    If (sMode = "difference") Begin
+                        Move (aSorted[i].nValue - aSorted[i].nCompValue) to valueCurrent
+                        Move (aSorted[j].nValue - aSorted[j].nCompValue) to valueCompared
+                    End
+                    Else Begin
+                        Move aSorted[i].nValue to valueCurrent
+                        Move aSorted[j].nValue to valueCompared
+                    End
+            
+                    Boolean bSwap
+                    If (bTop) Begin
+                        Move (valueCurrent < valueCompared) to bSwap
+                    End
+                    Else Begin
+                        Move (valueCurrent > valueCompared) to bSwap
+                    End
+            
+                    If (bSwap) Begin
+                        Move aSorted[i] to tmp
+                        Move aSorted[j] to aSorted[i]
+                        Move tmp to aSorted[j]
+                    End
+            
+                Loop
+            Loop
+            
+            // Trim to top/bottom N if needed
+            If (iCount > 0 and SizeOfArray(aSorted) > iCount) ;
+                Move (ResizeArray(aSorted, iCount)) to aSorted
+            
+            Function_Return aSorted
+        End_Function
+        
+        Procedure HideAvatar Boolean bHidden
+            WebSet pbHidden of oSalesPersonAvatar to bHidden
+        End_Procedure
+        
+        Procedure HideCompareValue Boolean bHidden
+            WebSet pbHidden of oDifference to bHidden
+        End_Procedure
+        
+        Procedure OnManualLoadData tWebRow[] ByRef aTheRows String ByRef sCurrentRowID
+            tListData[] aListData aSorted
+            Integer iCount iSize iAlertLevel iStock
+            String sPath sUrl sFormattedTotal sFormattedCompare sSortType sDataSet sMode
+            Number nDifferenceValue
+        
+            Get paListData to aListData
+            WebGet psSortType of (Widget(Self)) to sSortType
+            WebGet psDataSet of (Widget(Self)) to sDataSet
+            WebGet psMode of (Widget(Self)) to sMode
+            WebGet piLowInventoryAlertLevel of (Widget(Self)) to iAlertLevel
+            
+            If (sSortType = "Top") Begin
+                Move (SortData(Self, aListData, sMode, True, 5)) to aSorted
+            End
+            Else If (sSortType = "Bottom") Begin
+                Move (SortData(Self, aListData, sMode, False, 5)) to aSorted
+            End
+            
+            Move (SizeOfArray(aSorted)) to iSize
+            
+            Case Begin
+                Case (sDataSet = "SalesPersons")
+                WebSet psCaption of oHeader to (SFormat("%1 - %2 %3 Revenue by Salespersons", sDataSet, sSortType, iSize))
+                    Case Break
+                Case (sDataSet = "Customers")
+                WebSet psCaption of oHeader to (SFormat("%1 - %2 %3 Revenue from Customers", sDataSet, sSortType, iSize))
+                    Case Break
+                Case (sDataSet = "Inventory")
+                WebSet psCaption of oHeader to (SFormat("%1 - %2 %3", sDataSet, sSortType, iSize))
+                    Case Break
+            Case End
+
+            For iCount from 0 to (iSize - 1)
+                Move aSorted[iCount].sRowId to aTheRows[iCount].sRowId
+                Move (Trim(aSorted[iCount].sName)) to aTheRows[iCount].aCells[1].sValue
+                
+                Case Begin
+                    Case (sDataSet = "SalesPersons")
+                        Get SalesAvatarsFolder of oZoomSalesPerson to sPath
+                        Move (sPath + "\" + Trim(aSorted[iCount].sAvatar)) to sPath
+                        Get DownloadURL of ghoWebResourceManager sPath to sUrl
+                        Move sUrl to aTheRows[iCount].aCells[0].aOptions[0]
+                        
+                        Move (FormatCurrency(aSorted[iCount].nValue, 2)) to sFormattedTotal
+                        Case Break
+                    Case (sDataSet = "Customers")
+                        Move (FormatCurrency(aSorted[iCount].nValue, 2)) to sFormattedTotal
+                        Case Break
+                    Case (sDataSet = "Inventory")
+                        Move aSorted[iCount].nValue to iStock
+                        
+                        If (iStock < iAlertLevel) Begin
+                            Move "LowStock" to aTheRows[iCount].aCells[2].sCssClassName
+                        End
+                        
+                        Move iStock to sFormattedTotal
+                Case End
+               
+                Move (aSorted[iCount].nValue - aSorted[iCount].nCompValue) to nDifferenceValue
+                Move (FormatCurrency(nDifferenceValue, 2)) to sFormattedCompare
+                If (Left(sFormattedCompare, 1) = "(") Begin
+                    Move (Replace("(", sFormattedCompare, "")) to sFormattedCompare
+                    Move (Replace(")", sFormattedCompare, "")) to sFormattedCompare
+                
+                    Move ("- " + sFormattedCompare) to sFormattedCompare
+                End
+                Else Begin
+                    Move ("+ " + sFormattedCompare) to sFormattedCompare
+                End
+                
+                Move sFormattedCompare to aTheRows[iCount].aCells[3].sValue
+                Move sFormattedTotal to aTheRows[iCount].aCells[2].sValue
+            Loop
+        End_Procedure
+        
+        WebRegisterPath ntNavigateForward oZoomSalesPerson Self 
+        WebRegisterPath ntNavigateForward oZoomCustomer Self
+        WebRegisterPath ntNavigateForward oZoomInventory Self
+
+        Procedure OnRowClick String sRowID Integer iColumnIndex
+            Forward Send OnRowClick sRowID iColumnIndex
+            String sDataSet
+            
+            WebGet psDataSet of (Widget(Self)) to sDataSet
+            
+            Case Begin
+                Case (sDataSet = "SalesPersons")
+                    Send NavigateForward of oZoomSalesPerson Self
+                    Case Break
+                Case (sDataSet = "Customers")
+                    Send NavigateForward of oZoomCustomer Self
+                    Case Break
+                Case (sDataSet = "Inventory")
+                    Send NavigateForward of oZoomInventory Self
+                    Case Break
+            Case End
+        End_Procedure
+ 
+        Procedure OnGetNavigateForwardData tWebNavigateData  ByRef NavigateData Handle hoToView
+            String sDataSet
+            Forward Send OnGetNavigateForwardData (&NavigateData) hoToView
+            WebGet psCurrentRowId of oList to NavigateData.sRowID
+            
+            WebGet psDataSet of (Widget(Self)) to sDataSet
+            
+            Case Begin
+                Case (sDataSet = "SalesPersons")
+                    Move SalesPerson.File_Number to NavigateData.iTable
+                    Case Break
+                Case (sDataSet = "Customers")
+                    Move Customer.File_Number to NavigateData.iTable
+                    Case Break
+                Case (sDataSet = "Inventory")
+                    Move Inventory.File_Number to NavigateData.iTable
+                    Case Break
+            Case End
+        End_Procedure
+    End_Object
+    
+    Procedure Update
+        DateTime dtStartDate dtEndDate dtCompStart dtCompEnd
+        String sFilter sDataSet
+        tListData[] aListData
+    
+        Delegate Get WidgetDateFilter to sFilter
+        
+        Get StartDateByFilterType of oWidgetFilterAndDateFormatHandler sFilter to dtStartDate
+        Get EndDateByFilterType of oWidgetFilterAndDateFormatHandler sFilter to dtEndDate
+        Get CompareStartDateByFilterType of oWidgetFilterAndDateFormatHandler sFilter to dtCompStart
+        Get CompareEndDateByFilterType of oWidgetFilterAndDateFormatHandler sFilter to dtCompEnd
+        
+        WebGet psDataSet to sDataSet
+
+        Case Begin
+            Case (sDataSet = "SalesPersons") 
+                Set Main_DD to oSalesPerson_DD
+                Send Clear of oSalesPerson_DD
+                Set Server to oSalesPerson_DD
+                Set DDO_Server of oOrder_DD to oSalesPerson_DD
+                Send HideAvatar of oList False
+                Send HideCompareValue of oList False
+                Case Break
+            Case (sDataSet = "Customers")
+                Set Main_DD to oCustomer_DD
+                Send Clear of oCustomer_DD
+                Set Server to oCustomer_DD
+                Set DDO_Server of oOrder_DD to oCustomer_DD
+                Send HideAvatar of oList True
+                Send HideCompareValue of oList False
+                Case Break
+            Case (sDataSet = "Inventory")
+                Set Main_DD to oInventory_DD
+                Send Clear of oInventory_DD
+                Set Server to oInventory_DD
+                Send HideAvatar of oList True
+                Send HideCompareValue of oList True
+                Case Break
+        Case End
+        
+        Send BuildData sDataSet dtStartDate dtEndDate dtCompStart dtCompEnd (&aListData)
+    
+        Set paListData to aListData
+        Send GridRefresh of oList
+    End_Procedure
+
+    Procedure BuildData String sDataSet DateTime dtStart DateTime dtEnd DateTime dtCompStart DateTime dtCompEnd tListData[] ByRef aListData
+        If (sDataSet = "Inventory") Begin
+            Send CollectInventoryData (&aListData)
+        End
+        Else Begin
+            Send CollectPeriodData sDataSet dtStart dtEnd False (&aListData)
+            Send CollectPeriodData sDataSet dtCompStart dtCompEnd True (&aListData)            
+        End
+    End_Procedure
+
+    Procedure CollectPeriodData String sDataSet DateTime dtStart DateTime dtEnd Boolean bIsComparison tListData[] ByRef aListData
+        String sID sName sAvatar
+        Number nAmount
+        Integer iIndex iSizeOfArray
+        RowID riRow
+        tListData search
+        
+        WebSet pdtStartDate of (Widget(Self)) to dtStart
+        WebSet pdtEndDate of (Widget(Self)) to dtEnd
+               
+        Send Rebuild_Constraints of oOrder_DD        
+        Send Clear of oOrder_DD
+        Send Find of oOrder_DD FIRST_RECORD 3
+        
+        While (Found)
+            
+            // dataset determines what ID to use
+            If (sDataSet = "SalesPersons") Begin
+                Move (Trim(OrderHeader.SalesPerson_ID)) to sID
+            End
+            Else Begin
+                Move (Trim(OrderHeader.Customer_Number)) to sID
+            End
+            
+            Move OrderHeader.Order_Total to nAmount
+            
+            If (sID <> "" and sID <> "NONE") Begin
+                
+                Move (SizeOfArray(aListData)) to iSizeOfArray
+                
+                // Look for existing row
+                Move sID to search.sID
+                Move (SearchArray(search, aListData)) to iIndex
+                
+                If (iIndex <> -1) Begin
+                    If (bIsComparison) Begin
+                        Move (aListData[iIndex].nCompValue + nAmount) to aListData[iIndex].nCompValue    
+                    End
+                    Else Begin
+                        Move (aListData[iIndex].nValue + nAmount) to aListData[iIndex].nValue    
+                    End
+                    
+                End
+                Else Begin                        
+                    If (sDataSet = "SalesPersons") Begin
+                        Send Clear of oSalesPerson_DD
+                        Move sID to SalesPerson.ID
+                        Send Find of oSalesPerson_DD EQ 1
+                        If (Found) Begin
+                            Move (Trim(SalesPerson.Name)) to sName
+                            Move (Trim(SalesPerson.Avatar)) to sAvatar
+                            Move (GetRowID(SalesPerson.File_Number)) to riRow
+                        End
+                    End
+                    Else Begin
+                        Send Clear of oCustomer_DD
+                        Move sID to Customer.Customer_Number
+                        Send Find of oCustomer_DD EQ 1
+                        If (Found) Begin
+                            Move (Trim(Customer.Name)) to sName
+                            Move (GetRowID(Customer.File_Number)) to riRow
+                        End
+                    End
+                    
+                    Move (SizeOfArray(aListData)) to iSizeOfArray
+                    Move sID to aListData[iSizeOfArray].sID
+                    Move sName to aListData[iSizeOfArray].sName
+                    Move sAvatar to aListData[iSizeOfArray].sAvatar
+                    Move (SerializeRowID(riRow)) to aListData[iSizeOfArray].sRowID
+                    
+                    If (bIsComparison) Begin
+                        Move nAmount to aListData[iSizeOfArray].nCompValue    
+                    End
+                    Else Begin
+                        Move nAmount to aListData[iSizeOfArray].nValue    
+                    End                       
+                End
+            End
+    
+            Send Find of oOrder_DD NEXT_RECORD 3
+        Loop
+    End_Procedure
+    
+    Procedure CollectInventoryData tListData[] ByRef aListData
+        Integer iIndex
+        tListData tRow
+        RowID riRow
+        
+        Send Clear of oInventory_DD
+        Send Find of oInventory_DD FIRST_RECORD 1
+        
+        Move (ResizeArray(aListData, 0)) to aListData
+        
+        While (Found)
+            Move (SizeOfArray(aListData)) to iIndex
+            
+            Move (Trim(Inventory.Vendor_Part_ID)) to tRow.sID
+            Move (Trim(Inventory.Description)) to tRow.sName
+            Move Inventory.On_Hand to tRow.nValue
+            Move (GetRowID(Inventory.File_Number)) to riRow
+            Move (SerializeRowID(riRow)) to tRow.sRowId
+            
+            Move tRow to aListData[-1]
+            
+            Send Find of oInventory_DD NEXT_RECORD 1
+        Loop
+    End_Procedure
+
+    
+    Procedure OnGetConfigurableProps tWidgetConfigProp[] ByRef aConfigurableProps
+        Forward Send OnGetConfigurableProps (&aConfigurableProps)
+        
+        Get CreateConfigurableProp Self (RefFunc(psDataSet)) to aConfigurableProps[-1]
+        Get CreateConfigurableProp Self (RefFunc(psSortType)) to aConfigurableProps[-1]
+        Get CreateConfigurableProp Self (RefFunc(psMode)) to aConfigurableProps[-1]
+        Get CreateConfigurableProp Self (RefFunc(piLowInventoryAlertLevel)) to aConfigurableProps[-1]
+    End_Procedure
+End_Composite

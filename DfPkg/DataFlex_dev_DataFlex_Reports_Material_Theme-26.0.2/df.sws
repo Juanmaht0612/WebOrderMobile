@@ -1,0 +1,27 @@
+{
+    "dependencies": [
+        "DataFlex-dev/DataFlex Reports Web Shared#~26.0.0",
+        "DataFlex-dev/Web UI Material Theme#~1.0.0"
+    ],
+    "description": "Material theme for DataFlex Reports",
+    "df": 26.0,
+    "package": {
+        "df-max": 26.0,
+        "df-min": 26.0,
+        "htmlIncludes": [
+            "DataFlexReports/CssThemes/Df_Material/Previewer.css",
+            "DataFlexReports/CssThemes/Df_Material/Integration.css"
+        ],
+        "icon": "DR.png",
+        "install": [
+            "${AppHtml}/DataFlexReports/CssThemes/Df_Material"
+        ],
+        "license": "DocumentRef-DataFlexReports",
+        "licenseFile": "LICENSE",
+        "version": "26.0.2"
+    },
+    "paths": {
+        "fileList": "DummyFilelist.cfg"
+    },
+    "workspaceName": "DataFlex Reports Material Theme"
+}

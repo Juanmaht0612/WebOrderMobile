@@ -1,0 +1,526 @@
+﻿Use cWebView.pkg
+Use cWebPanel.pkg
+Use cWebForm.pkg 
+Use cWebGroup.pkg
+Use cWebMenuGroup.pkg 
+Use cWebMenuItem.pkg
+Use cWebCheckBox.pkg
+Use cWebLabel.pkg
+Use cWebSuggestionForm.pkg
+Use cWebDatePicker.pkg
+Use cWebCombo.pkg
+Use cWebDateForm.pkg
+Use cWebSlider.pkg
+Use cWebProgressBar.pkg
+Use cWebTabContainer.pkg
+Use cWebTabPage.pkg
+Use cWebButton.pkg
+Use cWebEdit.pkg
+Use cWebHorizontalLine.pkg
+
+Object oDemoThemes is a cWebView
+    Set peWebViewStyle to wvsDrillDown
+    Set peViewType to vtZoom
+    Set pbShowCaption to False
+    Set Verify_Save_msg to 0 // don't confirm saves
+    Set psCaption to "DemoThemes"
+    Set piColumnCount to 12
+    Set piMaxWidth to 1024
+
+    Object oWebMainPanel is a cWebPanel
+        Set piColumnCount to 12
+        WebSetResponsive piColumnCount rmMobile to 6
+        
+        Object oThemesGroup is a cWebGroup
+            Set piColumnSpan to 6
+            Set psCaption to "Themes"
+
+            Object oMaterialCheckbox is a cWebCheckbox
+                Set piColumnSpan to 0
+                Set psCaption to "Material"
+                Set pbServerOnChange to True
+
+                Procedure OnChange String sNewValue String sOldValue
+                    WebSet psTheme of (Host(Self)) to "Df_Material"
+                    Send UpdateSelectedTheme
+                End_Procedure             
+            End_Object
+
+            Object oFlatTouchCheckbox is a cWebCheckbox
+                Set piColumnSpan to 0
+                Set psCaption to "Flat Touch"
+                Set pbServerOnChange to True
+
+                Procedure OnChange String sNewValue String sOldValue
+                    WebSet psTheme of (Host(Self)) to "Df_Flat_Touch"
+                    Send UpdateSelectedTheme
+                End_Procedure
+            End_Object
+
+            Object oFlatDesktopCheckbox is a cWebCheckbox
+                Set piColumnSpan to 0
+                Set psCaption to "Flat Desktop"
+                Set pbServerOnChange to True
+
+                Procedure OnChange String sNewValue String sOldValue
+                    WebSet psTheme of (Host(Self)) to "Df_Flat_Desktop"
+                    Send UpdateSelectedTheme
+                End_Procedure
+            End_Object
+    
+            Procedure UpdateSelectedTheme
+                String sTheme
+    
+                //  Determine theme
+                WebGet psTheme of (Host(Self)) to sTheme
+                
+                //  Store the selected theme in the session property
+                WebSet psCustomTheme of (Host(Self)) to sTheme
+    
+                //  Set enabled state
+                Send SetChecked of (oFlatTouchCheckbox)     (sTheme = "Df_Flat_Touch")
+                Send SetChecked of (oFlatDesktopCheckbox)   (sTheme = "Df_Flat_Desktop")
+                Send SetChecked of (oMaterialCheckbox)      (sTheme = "Df_Material")
+            End_Procedure
+            
+            Procedure OnLoad
+                Send UpdateSelectedTheme
+            End_Procedure
+        End_Object
+        
+        Object oDarkLightGroup is a cWebGroup
+            Set piColumnSpan to 6
+            Set piColumnIndex to 6
+            Set psCaption to "Dark / Light mode"
+            
+            Object oSystemPreferenceCheckbox is a cWebCheckbox
+                Set piColumnSpan to 0
+                Set psCaption to "System preference"
+                Set pbServerOnChange to True
+
+                Procedure OnChange String sNewValue String sOldValue
+                    WebSet peThemePreference of (Host(Self)) to tpSystemPreference
+                    Send UpdateActiveMode
+                End_Procedure                
+            End_Object
+
+            Object oDarkCheckbox is a cWebCheckbox
+                Set piColumnSpan to 0
+                Set psCaption to "Dark"
+                Set pbServerOnChange to True
+
+                Procedure OnChange String sNewValue String sOldValue
+                    WebSet peThemePreference of (Host(Self)) to tpDarkMode
+                    Send UpdateActiveMode
+                End_Procedure   
+            End_Object
+
+            Object oLightCheckbox is a cWebCheckbox
+                Set piColumnSpan to 0
+                Set psCaption to "Light"
+                Set pbServerOnChange to True
+
+                Procedure OnChange String sNewValue String sOldValue
+                    WebSet peThemePreference of (Host(Self)) to tpLightMode
+                    Send UpdateActiveMode
+                End_Procedure   
+            End_Object
+            
+            Procedure UpdateActiveMode
+                Integer eThemePreference
+                
+                WebGet peThemePreference of (Host(Self)) to eThemePreference
+                
+                WebSet peCustomPreference of (Host(Self)) to eThemePreference
+                
+                Send SetChecked of oSystemPreferenceCheckbox  (eThemePreference = tpSystemPreference)
+                Send SetChecked of oDarkCheckbox              (eThemePreference = tpDarkMode)
+                Send SetChecked of oLightCheckbox             (eThemePreference = tpLightMode)
+            End_Procedure
+            
+            Procedure OnLoad
+                Send UpdateActiveMode
+            End_Procedure
+        End_Object
+
+        // This previews the different web controls in the specified theme
+        Object oPreviewGroup is a cWebGroup
+            Set piColumnCount to 12
+            Set piColumnSpan to 12
+            Set psCaption to "Preview"
+            Set pbFillHeight to True
+        
+            Object oForm is a cWebForm
+                Set piColumnSpan to 6
+                Set psLabel to "Form with Top Label"
+                Set pbPromptButton to True
+                Set psValue to "Value.."
+                Set peLabelPosition to lpTop
+            End_Object
+    
+            Object oWebForm1 is a cWebForm
+                Set piColumnSpan to 6
+                Set psLabel to "Disabled Form with Top Label"
+                Set piColumnIndex to 6
+                Set pbEnabled to False
+                Set psValue to "Value..."
+                Set peLabelPosition to lpTop
+            End_Object
+                    
+            Object oWebCombo1 is a cWebCombo
+                Set piColumnSpan to 6
+                Set psLabel to "Combo"
+                Set psValue to "Test 1"
+                Set piLabelOffset to 60
+                
+                Procedure OnFill
+                    Forward Send OnFill
+                            
+                    Send AddComboItem "Test 1" "Test Data 1"
+                    Send AddComboItem "Test 2" "Test Data 2"
+                    Send AddComboItem "Test 3" "Test Data 3"
+                End_Procedure
+                
+            End_Object
+    
+            Object oWebDateForm2 is a cWebDateForm
+                Set piColumnSpan to 6
+                Set psLabel to "DateForm"
+                Set piColumnIndex to 6
+                Set piLabelOffset to 80
+            End_Object
+    
+            Object oWebRadio1 is a cWebRadio
+                Set piColumnSpan to 3
+                Set psRadioValue to "Y"
+                Set psCaption to "Radio 1"
+            End_Object
+    
+            Object oWebRadio2 is a cWebRadio
+                Set piColumnSpan to 3
+                Set piColumnIndex to 3
+                Set psRadioValue to "N"
+                Set psCaption to "Radio 2"
+            End_Object
+    
+            Object oWebCheckbox1 is a cWebCheckbox
+                Set piColumnSpan to 3
+                Set psCaption to "Checkbox"            
+                Set piColumnIndex to 6
+                Set psValue to "1"
+            End_Object
+    
+            Object oWebButton2 is a cWebButton
+                Set piColumnSpan to 2
+                Set psCaption to "Button"
+                Set piColumnIndex to 10
+            
+                Procedure OnClick
+                End_Procedure
+            End_Object
+    
+            Object oWebSuggestionForm1 is a cWebSuggestionForm
+                Set piColumnSpan to 6
+                Set psLabel to "SuggestionForm"
+                Set piLabelOffset to 120
+                Set piStartAtChar to 1
+                Set psPlaceHolder to "Type here..."
+    
+                Procedure OnFindSuggestions String sSearch tSuggestion[] ByRef aSuggestions
+                    Move "First Suggestion" to aSuggestions[0].aValues[0]
+                    Move "1" to aSuggestions[0].sRowId
+                    Move "Second Suggestion" to aSuggestions[1].aValues[0]
+                    Move "2" to aSuggestions[1].sRowId
+                    Move "Suggestion Number Three" to aSuggestions[2].aValues[0]
+                    Move "3" to aSuggestions[2].sRowId
+                    Move "Yet Another Suggestion" to aSuggestions[3].aValues[0]
+                    Move "4" to aSuggestions[3].sRowId
+                End_Procedure
+            End_Object
+    
+            Object oWebEdit1 is a cWebEdit
+                Set piColumnSpan to 6
+                Set psLabel to "Edit"
+                Set piLabelOffset to 50
+                Set psValue to "Test comment"
+                Set piColumnIndex to 6
+                Set piHeight to 80
+            End_Object
+    
+            Object oWebGroup1 is a cWebGroup
+                Set psCaption to "Group"
+                Set piColumnCount to 12   
+    
+                Object oWebSlider1 is a cWebSlider
+                    Set psLabel to "Slider:"
+                End_Object
+    
+                Object oWebProgressBar1 is a cWebProgressBar
+                    Set pbShowLabel to True
+                    Set psLabel to "Progress"
+                    Set piValue to 48
+                End_Object
+            End_Object
+    
+            Object oWebTabContainer1 is a cWebTabContainer
+                               
+                Object oWebTabPage3 is a cWebTabPage
+                    Set psCaption to "Buttons & Dialogs"
+                    Set piColumnCount to 12  
+                    Set pbScroll to True
+                    
+                    Object oInfoBtn is a cWebButton
+                        Set psCaption to "Standard Info Dialog"
+                        Set piColumnSpan to 4
+                        
+                        Procedure OnClick
+                            Send ShowInfoBox of oWebApp "Hello world!"
+                        End_Procedure
+                    End_Object
+                    
+                    Object oConfirmBtn is a cWebButton
+                        Set psCaption to "Standard Confirmation Dialog"
+                        Set piColumnSpan to 4
+                        Set piColumnIndex to 4
+                        
+                        Procedure ConfirmResponse Integer eConfirmMode
+                            If (eConfirmMode = cmYes) Begin
+                                WebSet pbEnabled to False
+                            End
+                        End_Procedure
+                        
+                        WebPublishProcedure ConfirmResponse
+                        
+                        Procedure OnClick
+                            Send ShowYesNo of oWebApp (Self) (RefProc(ConfirmResponse)) "Are you sure you want to disable this button?" "Question title!"
+                        End_Procedure
+                    End_Object
+                    
+                    Object oCustomMessage is a cWebButton
+                        Set psCaption to "Custom Message Box"
+                        Set piColumnSpan to 4
+                        Set piColumnIndex to 8
+                        
+                        Procedure CustomResponse Integer eBtn
+                            Send ShowInfoBox ("You liked " + String(eBtn) + "!")
+                        End_Procedure
+                        
+                        WebPublishProcedure CustomResponse
+                
+                        Procedure OnClick
+                            String[] aButtons
+                            
+                            Move "One"      to aButtons[0]
+                            Move "Two"      to aButtons[1]
+                            Move "Three"    to aButtons[2]
+                            Move "Four"     to aButtons[3]
+                            
+                            Send ShowMessageBox of oWebApp Self (RefProc(CustomResponse)) "Pick your favorite number!" "Multiple choice" "WebMsgBoxConfirm" 1  aButtons
+                        End_Procedure        
+                    End_Object
+                
+                    Object oYesNoCancelBtn is a cWebButton
+                        Set piColumnSpan to 4
+                        Set psCaption to "Yes No Cancel"
+                        
+                        Procedure HandleResponse Integer eBtn
+                            If (eBtn = cmYes) Begin
+                                WebSet psCaption to ("Yes No Cancel" + " (Yes)")
+                            End
+                            If (eBtn = cmNo) Begin
+                                WebSet psCaption to ("Yes No Cancel" + " (No)")
+                            End
+                            If (eBtn = cmCancel) Begin
+                               WebSet psCaption to ("Yes No Cancel" + " (Cancel)") 
+                            End
+                        End_Procedure
+                        WebPublishProcedure HandleResponse
+                        
+                        Procedure OnClick
+                            Send ShowYesNoCancel Self (RefProc(HandleResponse)) "Sure you clicked this?" "Confirm!" cmYes
+                        End_Procedure
+                    End_Object
+                     
+                    Object oWebHorizontalLine1 is a cWebHorizontalLine
+                    End_Object
+                
+                
+                    Object oWebButton1 is a cWebButton
+                        Set piColumnSpan to 4
+                        Set psCaption to "Wait Dialog"
+                        Set pbShowWaitDialog to True
+                        
+                        Procedure OnClick
+                            Sleep 5
+                        End_Procedure
+                    End_Object
+                
+                    Object oWebHorizontalLine2 is a cWebHorizontalLine
+                    End_Object
+                    
+                    Object oErrorDialog is a cWebButton
+                        Set psCaption to "Standard Error Dialog"
+                        Set piColumnSpan to 4
+                        
+                        Procedure OnClick
+                            Error 150 "Demo error message shown as unhandled error!"
+                        End_Procedure
+                    End_Object
+            
+                    Object oUnhandledClientError is a cWebButton
+                        Set piColumnSpan to 4
+                        Set psCaption to "Clientside Error Dialog"
+                    
+                        Set psClientOnClick to "DoesNotExist"
+                        Set pbServerOnClick to False
+                        Set piColumnIndex to 4
+                    End_Object
+                    
+                    Object oUserErrorDialog is a cWebButton
+                        Set psCaption to "User Error Dialog"
+                        Set piColumnSpan to 4
+                        Set piColumnIndex to 8
+                        
+                        Procedure OnClick
+                            Send UserError "Friendly error message using the UserError procedure." "Friendly error message!"
+                        End_Procedure
+                    End_Object  
+                End_Object
+                
+                Object oWebTabPage2 is a cWebTabPage
+                    Set psCaption to "Calendar"
+                    Set piColumnCount to 12    
+                    Set pbScroll to True
+    
+                    Object oWebDatePicker1 is a cWebDatePicker
+                        Set piColumnSpan to 9
+                        Set psLabel to "DatePicker:"
+                    End_Object
+                End_Object    
+            End_Object
+        End_Object        
+    End_Object 
+    
+    Object oActionGroup is a cWebMenuGroup
+        Set psGroupName to "MainActions"
+
+        Object oSaveBtn is a cWebMenuItem
+            Set psCaption to C_$Save
+            Set psCSSClass to "WebSaveMenuItem"
+        
+            Procedure OnClick
+                Send Request_Save
+            End_Procedure
+        End_Object
+        
+        Object oEditBtn is a cWebMenuItem
+            Set psCaption to C_$CategoryEdit
+            Set psCSSClass to "WebEditMenuItem"
+            Procedure OnClick
+                Send ChangeEditMode True
+                Send SetActionButtons
+            End_Procedure
+        End_Object 
+        
+        Object oDeleteBtn is a cWebMenuItem
+            Set psCaption to C_$Delete
+            Set psCSSClass to "WebDeleteMenuItem"
+            Set peActionDisplay to adMenu            
+            
+            Procedure OnClick
+                Send Request_Delete
+            End_Procedure
+        End_Object
+
+        Object oCancelChangesBtn is a cWebMenuItem
+            Set psCaption to C_$ToolTipClear
+            Set peActionDisplay to adMenu            
+                        
+            Procedure OnClick
+                // this will undo any unchanged saves and show the latest
+                Send RefreshRecord
+            End_Procedure
+        End_Object 
+
+    End_Object
+
+    // This can be used to show and hide buttons based on context.
+    // This can be called any time the view is active.
+    Procedure SetActionButtons
+        tWebNavigateData NavigateData
+        Boolean bHasRecord
+        Handle hoDD
+
+        Get Server to hoDD
+        Get GetNavigateData to NavigateData
+        
+        If (hoDD) Begin
+            Get HasRecord of hoDD to bHasRecord
+        End
+        Else Begin
+            Move False to bHasRecord
+        End
+
+        // let's hide all buttons and then show the ones we want
+        WebSet pbRender of oEditBtn to False 
+        WebSet pbRender of oSaveBtn to False
+        WebSet pbRender of oCancelChangesBtn to False
+        WebSet pbRender of oDeleteBtn to False
+
+        If (NavigateData.bReadOnly) Begin 
+            WebSet pbRender of oEditBtn to True 
+        End
+        Else Begin
+            WebSet pbRender of oSaveBtn to True
+            WebSet pbRender of oCancelChangesBtn to True
+            WebSet pbRender of oDeleteBtn to bHasRecord
+        End
+    End_Procedure
+
+    // this will close the view after a save
+    Procedure OnViewSaved Handle hoServer Boolean bChanged
+        Send NavigateClose Self
+    End_Procedure
+
+    // this will close the view after a delete
+    Procedure OnViewDeleted Handle hoDDO
+        Send NavigateClose Self
+    End_Procedure
+
+    // Add code to customize your Zoom View based on how it was invoked.
+    // Use NavigateData to determine the context this view will be used in.
+    Procedure OnNavigateForward tWebNavigateData NavigateData Integer hoInvokingView Integer hoInvokingObject
+
+        // if this view is being used in multiple contexts, you may need a block of code
+        // like this to handle customizations. This would include hiding rows and buttons
+        // (WebSet pbRender) and changing the values of various captions.
+        Case Begin
+            Case (NavigateData.eNavigateType = nfFromMain)
+                // If from main, this is a probably a main file Select to Zoom.
+                // This is the most typical way to navigate to a zoom.
+                Case Break
+                
+            Case (NavigateData.eNavigateType = nfFromParent)
+                // If from parent, this is a constrained drill down.
+                // If needed, you could check NavigateData.iTable to determine the constraining parent.
+                // This would be unusual - normally you drill down from a parent to a list (Select view).
+                Case Break
+                
+            Case (NavigateData.eNavigateType = nfFromChild)
+                // If from child, this is a probably a parent Zoom from a Zoom. 
+                // This is unusual, but it might be used for adding a new child record.
+                Case Break
+                
+            Case Else // must be nfUndefined
+                // This may be the start of a query or this may be used for some kind of custom operation.
+                // You may want to check NavigateData.NamedValues.
+                  
+        Case End
+
+        // Action buttons can be changed dynamically during a Zoom's display lifetime.
+        // It's best to set these buttons in their own procedure so you can change later.
+        Send SetActionButtons
+
+    End_Procedure
+
+End_Object

@@ -1,0 +1,125 @@
+END USER LICENSE AGREEMENT FOR DATA ACCESS EUROPE SOFTWARE
+
+Software Product: DataFlex Reports Developer Edition; DataFlex Reports Standard Edition, DataFlex Reports Runtime, DataFlex Reports Web Deployment License
+
+IMPORTANT - READ CAREFULLY: This End User License Agreement ("EULA") is a binding legal agreement between You and Data Access Europe BV ("DAE") for the Software Product identified above, which includes computer software and associated media, and may include "online", electronic or printed documentation and associated materials (collectively the "Software Product"). By installing, copying, or using the Software Product or any part thereof, You warrant that You have the authority to enter into this EULA and You agree to be legally bound by its terms and conditions, the limited warranties and limitations of liability and restrictions expressed herein. If You do not agree to all terms and conditions of this EULA, You are not authorized to install or use the Software Product.
+
+DEFINITIONS
+
+"Report" – A structured output of printed or electronic data created by the Software Product or its Workstation Runtime or Web Deployment License.
+
+"Report Definition File" – A proprietary format data files that contain the definition of the data elements, formatting and functional parameters of a Report produced by the Software Product. The Software Product requires Report Definition Files to create a Report. Report definition files can for example have extensions like: DR, VRW, DPL, or JSON.
+
+"DataFlex Reports Runtime" – The components of the Software Product that are required to execute Reports in conjunction with the Windows desktop operating system and DataFlex Client License environment. Technically the runtime is a file named "DataFlex Reports Developer Edition API.ocx".
+
+"Web Deployment License" – A license to use the DataFlex Reports Runtime to execute Reports on a Server Instance and to distribute via the internet Reports produced on the licensed Server Instance.
+
+"DataFlex Client Engine" – Software installed on or executed on a computer to enable the function and operation of the Software Product.
+
+"Server Instance" – A network operating system environment installed a) directly on a physical hardware server or b) on a virtual server, including a "cloud" server instance, that is configured to share resources among multiple End Users’ computers or devices that are connected to it. A specific connection technology is not consequential to the definition of a Server Instance; the existence of multiple End User connections and the sharing of resources are the essence of a Server Instance for the purposes of this EULA.
+
+"You" or "Your" – an individual person or, in a legal business entity, one named person designated to exercise the right to use the Software Product according to the terms and conditions of this EULA. If licensee is a legal business entity, designation of a named person to exercise licensee’s rights does not create an additional license for the designee as an individual; all rights and responsibilities remain licensee’s.
+
+1.		GRANT OF LICENSE.
+The Software Product is protected by copyright laws and international copyright treaties as well as other intellectual property laws and treaties. The Software Product is licensed, not sold. Subject to the terms and conditions hereof, this EULA grants You the following limited, non-exclusive rights:
+
+1.1	 	FOR THE SOFTWARE PRODUCT DESCRIBED AS "DATAFLEX REPORTS STANDARD EDITION": Subject to the terms and conditions hereof, this EULA grants You the following limited, non-exclusive, non-transferable rights:  
+
+1.1.1	You may install the Software Product on any computer of which You are the primary user. 
+1.1.2	You may use the Software Product on only one computer at a time. The Software Product is "in use" when it is loaded into the temporary memory (i.e., RAM) of the computer upon which You are working. 
+1.1.3	You may not allow others to use the Software Product licensed to You.
+1.1.4	You may use the Software Product to design, create, test and run reports.
+1.1.5	You may distribute to third parties Report Definition Files created with Your license to the Software Product provided that third party recipients of Report Definition Files use them solely with their own DataFlex Reports license.
+1.1.6	Solely with respect to electronic documents included with the Software Product, You may make copies (either in hardcopy or electronic form), provided that such copies are only for Your use in operating this Software Product and are not republished or distributed to any third party.
+1.1.7	If the delivery of the Software Product includes a DataFlex Client Engine, the use of the Client Engine is limited to the use in conjunction with the Software Product exclusively.
+
+1.2	 	FOR THE SOFTWARE PRODUCT DESCRIBED AS "DATAFLEX REPORTS DEVELOPER EDITION": Subject to the terms and conditions hereof, this EULA grants You the following limited, non-exclusive, non-transferable rights: 
+
+1.2.1	You may install the Software Product on any computer or Server Instance on which you develop Reports. 
+1.2.2	You may use the Software Product on only one computer at a time. 
+1.2.3	You may not share or allow another person to use the Software Product licensed to You or designated for Your use.
+1.2.4	You may use the Software Product to design, create, test and run reports.
+1.2.5	You may distribute to third parties Reports that are created with Your license of the Software Product.
+1.2.6	You may distribute to third parties Report Definition Files created with Your license to the Software Product provided that third party recipients of Report Definition Files use them with their own DataFlex Reports license or integrated with DataFlex desktop applications.
+1.2.7	You may distribute the DataFlex Reports Runtime to third parties for use with a properly licensed DataFlex Windows desktop application.
+1.2.8	You may use the resources of the DataFlex Reports Runtime to integrate reports with Your DataFlex applications.
+1.2.9	You may not install a DataFlex Reports Runtime on a Server Instance, execute Report Definition Files nor publish, distribute or otherwise deliver Reports via a Server Instance unless a Web Deployment License is purchased.
+1.2.10	Solely with respect to electronic documents included with the Software Product, You may make copies (either in hardcopy or electronic form), provided that such copies are only for Your use in operating this Software Product and are not republished or distributed to any third party.
+1.2.11	If the delivery of the Software Product includes a DataFlex Client Engine, the use of the Client Engine is limited to use exclusively in conjunction with the Software Product.
+
+1.3	 	FOR THE SOFTWARE PRODUCT DESCRIBED AS "WEB DEPLOYMENT LICENSE": Subject to the terms and conditions hereof, this EULA grants You the following limited, non-exclusive, non-transferable rights: 
+1.3.1	You may install and use the DataFlex Reports Runtime on one Server Instance.
+1.3.2	You may execute Report Definition Files on one web Server Instance. 
+1.3.3	You may publish, distribute or otherwise deliver via the internet the results of Report Definition Files executed on a licensed Server Instance.
+
+1.4	 	FOR THE SOFTWARE PRODUCT DESCRIBED AS "EDUCATIONAL LICENSE": Subject to the terms and conditions hereof, this EULA grants You the following limited, non-exclusive, non-transferable rights: 
+1.4.1	You may install and use the Software Product on one computer to design, create, run and test Reports solely in connection with courses in the field of computer science, computer programming, management information, reporting or business intelligence, and software design and development that You take at an accredited, not-for-profit educational institution. You may not deploy or otherwise distribute to third parties Reports You create except when providing the results of Your work to others involved in Your education. Solely with respect to electronic documents included with the Software Product, You may make printed copies, provided that such copies are only for Your use in operating this Software Product and are not republished or distributed to any third party. 
+
+1.5	 	FOR THE SOFTWARE PRODUCT DESCRIBED AS "EVALUATION LICENSE": Subject to the terms and conditions hereof, this EULA grants You the following limited, non-exclusive, non-transferable rights: 
+1.5.1	You may install and use the Software Product on one computer of which You are the primary user. You may use the Software Product to design, create, run and test Reports solely for the purpose of evaluating the Software Product’s suitability for Your requirements. You may not deploy for any commercial purpose or distribute to third parties Reports You create except when providing the results of Your work to others involved in the evaluation process. Solely with respect to electronic documents included with the Software Product, You may make printed copies, provided that such copies shall be only for Your use in operating this Software Product and are not republished or distributed to any third party. 
+
+NOTICE: Evaluation Licenses and Educational Licenses may have specifications or limitations that vary from Software Product licenses purchased at retail. Such licenses may have internal controls that cause the Software Product to cease to operate after a certain date or period of time. Your License to use the Software Product expires when any internal control causes operation to cease. You accept full responsibility to know and understand the limits of Your License and to ensure that the terms and conditions of the license, its specifications and time limitations, if any, are appropriate to Your use of the Educational or Evaluation Software Product.
+
+You may purchase additional rights to use the Software Product or to deploy or distribute created Reports. Regardless of the effect of any internal controls that may or may not be present in the Software Product, if Your License is granted for a specific period of time, Your rights to use the Software Product cease upon the expiration of the licensed period. Contact the nearest Data Access Worldwide regional office or an authorized reseller for more information.
+
+2.	DataFlex Reports Restrictions on Use
+
+2.1	Prohibited Uses: The licensee is expressly prohibited from:
+2.1.1	Using the Software Product, including its components, libraries and any related or new materials to develop and distribute a stand-alone software product the primary purpose of which is the creation, management, delivery, and/or dissemination of reports to End Users.
+2.1.2	Repackaging, redistributing, or reselling any part of the Software as a standalone reporting tool or framework or in any form that violates the terms and conditions of this EULA.
+2.2	Competitive Use: The licensee agrees not to use the Software to develop a product that competes with DataFlex Reports in the general-purpose reporting market.
+2.3	The Software is provided solely for the purposes of allowing the licensee to create reports and to integrate reports and reporting functionalities into software applications they create. The Software is not intended for and may not be used to develop a separate, generic, or stand-alone reporting or report distribution platform.
+2.4	Enforcement: Violation of the above restrictions may result in immediate termination of this license and may subject the licensee to legal action for damages
+
+3. 	RESERVATION OF RIGHTS. 
+Except as expressly licensed herein, DAE retains all right, title and interest in and to Software Product and any copies of the Software Product, regardless of location or the form in which the copies may exist. The Software Products’ design, structure, organization and source code are valuable trade secrets of DAE and its suppliers and are protected under E.U., U.S. and international trade secret laws.
+
+4. 	COPYRIGHT. 
+All copyrights in and to the Software Product, in all forms, and all copies of the Software Product are owned by DAE or its suppliers. The Software Product is protected by copyright laws and international treaty provisions. Therefore, You must treat the Software Product like any other copyrighted material except that You may make one copy of a licensed Software Product solely for backup or archival purposes. 
+
+5. 	DESCRIPTION OF OTHER SOFTWARE PRODUCT RIGHTS AND LIMITATIONS.
+You may not rent, lease, sublicense, reproduce, distribute, transmit, market, sell, assign, transfer, disclose, translate, modify, disassemble, or reverse engineer the Software Product by any means or in any form, or create derivative works based on the Software Product, or any portions thereof, or obtain possession of any source code or other technical material relating to Software Product. You may not reverse engineer the structure, logic or content of the Report Definition File. You agree not to remove, alter, or obscure any copyright notices or proprietary legends contained on the media or included in the Software Product. You may distribute Your Reports to others, but You may not distribute DataFlex or DataFlex Reports source code, packages, modules or components with Your source code. If the Software Product incorporates Codejock Software ActiveX controls, said controls shall be subject to the same terms and conditions, restrictions and limitations as the Software Product. You are only licensed to use said controls with the Software Product. Use of the Codejock Software ActiveX controls with any product other than the Software Product is a violation of this EULA and is NOT licensed hereunder. If the Software Product includes the software of any third party, the third-party software shall be subject to the same terms, conditions, restrictions and limitations as DAE’s Software Product. 
+
+6.	DESCRIPTION OF TERMS AND LIMITATIONS FOR REPORTS
+DAE makes no claims upon the Reports You create. You acknowledge and agree that DAE makes no representations and provides no warranty for Your Reports. You accept full responsibility for any and all aspects of Reports You create including but not limited to specification, operation, function, accuracy, support and maintenance. You agree that neither DAE nor its subsidiaries, affiliates, officers, directors, representatives, employees, business partners or shareholders have or shall have any responsibilities or liabilities whatsoever to users of Your Reports. You agree to indemnify and hold DAE, its subsidiaries, affiliates, officers, directors, representatives, employees, business partners, shareholders and suppliers harmless from and against any claims or liabilities arising from or as a result of the use of Your Reports or the Software Product. You are responsible for the provisioning of correctly licensed DataFlex Reports Runtimes, Client Engines and/or Web Deployment Licenses with Your Reports and any applications that produce them.
+
+7.	DESCRIPTION OF ADDITIONAL SOFTWARE SUBJECT TO LICENSE
+Unless a subsequent license is provided, the terms of this EULA apply to all Software Product updates, subscriptions, revisions, supplements, additional feature components, or other components that DAE may provide or make available after the effective date of this EULA. By installing and using any new or updated Software Product accompanied by this EULA, You agree that the terms and conditions of this EULA replace and supersede the terms and conditions of the EULA supplied with any prior revisions of the Software Product used by the licensee.
+
+
+8. 	TERMINATION. 
+This EULA terminates automatically and without notice upon Your failure to comply with its terms or conditions. Without prejudice to any other rights, DAE may terminate this EULA immediately if You fail to comply with the terms and conditions hereof. In the event of termination, You must immediately cease all use of the Software Product, cease to use or distribute Reports created with the Software Product licensed herein and destroy all copies of the Software Product in Your possession. 
+
+9.	EXPORT.
+You agree not to ship, transfer or export, directly or indirectly, electronically or otherwise, the Software Product into any country restricted by European Union regulations applicable to the export of dual-use items or the United States Export Administration Act and any related regulations (the "Act"), nor will You use the Software Product for any purpose prohibited by the Act or by the laws of the United States or the country in which You are located.
+
+10. 	U.S. GOVERNMENT RESTRICTED RIGHTS. 
+THE SOFTWARE PRODUCT AND DOCUMENTATION ARE PROVIDED WITH RESTRICTED RIGHTS. USE, DUPLICATION, OR DISCLOSURE BY THE U. S, GOVERNMENT IS SUBJECT TO THE RESTRICTIONS SET FORTH IN SUBPARAGRAPH (C)(1)(II) OF THE RIGHTS IN TECHNICAL DATA AND COMPUTER SOFTWARE CLAUSE AT DFARS 252.227-7013 OR SUBPARAGRAPHS (C)(1) AND (2) OF THE COMMERCIAL COMPUTER SOFTWARE-RESTRICTED RIGHTS AT 48 CFR 52.227-19, AS APPLICABLE AND AS MAY BE AMENDED. LICENSOR IS DATA ACCESS EUROPE, BV / LANSINKESWEG 4, 7553 AE HENGELO, THE NETHERLANDS. 
+
+11. 	MISCELLANEOUS 
+
+11.1 This EULA is the entire agreement between you and DAE and supersedes any proposal or prior agreement, offer, oral or written, in hardcopy or electronic form, and any other communications relating to the subject matter of this EULA.
+
+11.2 All fees and payments due to DAE shall be exclusive of foreign, state and local use, sales, property, internet and electronic commerce taxes, whether current or future. You agree to pay all such taxes.
+
+11.3 This EULA and any dispute or claim arising out of or in connection with it or its subject matter or formation (including non-contractual disputes or claims) shall be governed by and construed in accordance with the laws of the Netherlands. The United Nations Convention on Contracts for the International Sale of Goods shall not apply to this EULA. The courts of The Hague, the Netherlands, shall have exclusive jurisdiction to settle any dispute or claim arising out of or in connection with this EULA (including any non-contractual disputes or claims), provided that DAE may apply for injunctive or other urgent or equitable relief in any court of competent jurisdiction, wherever located.
+
+11.4 Should you have any questions concerning this EULA, or if you desire to contact Data Access Europe for any reason, please write to: Data Access Europe, Lansinkesweg 4, 7553 AE Hengelo
+The Netherlands.
+
+12. 	GENERAL – LIMITED WARRANTY.
+
+12.1	For a period of thirty days from the date of invoice, DAE warrants that the licensed Software Product will perform substantially in accordance with the accompanying documentation created by DAE. Some states and jurisdictions do not allow limitations on duration of an implied warranty, so the above limitation may not apply to You. To the extent allowed by applicable law, implied warranties on the Software Product is limited to ninety days. The general limited warranty varies according to the specific Software Product licensed as follows:
+12.1.1	EDUCATIONAL LICENSES: Software Product used as Educational Licenses are provided as-is, without warranty of any kind.
+12.1.2 	EVALUATION LICENSES: Software Product used as Evaluation Licenses are provided as-is, without warranty of any kind.
+12.1.3	TESTING LICENSES: Software Product used as Testing Licenses are explicitly provided as-is, without warranty of any kind whatsoever. Licensee assumes any and all risks associated with the use to Testing Licenses.
+
+13. 	CUSTOMER REMEDIES. 
+13.1	Regardless of the form or action, whether in contract, negligence, strict liability, tort, Product liability, or otherwise, DAE’s and its suppliers’ entire liability and Your exclusive remedy shall be, at DAE’s option, either (a) return of the price paid, or (b) repair or replacement of the Software Product that does not meet DAE’s Limited Warranty as described above and which is returned to DAE with a copy of Your invoice and payment details. This Limited Warranty is void if failure of the Software Product has resulted from accident, abuse, or misapplication or unauthorized modification. Any replacement Software Product will be warranted only for the remainder of the original warranty period or thirty (30) days, whichever is longer. Outside of the European Union and the United State, neither these remedies nor any product support services offered by DAE are available without proof of purchase from an authorized international source. The parties acknowledge that these remedies are reasonable based on the nature of the Software Product and shall not be deemed unreasonable or to fail of their essential purpose.
+
+13.2	NO OTHER WARRANTIES OR CONDITIONS. TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, DAE AND ITS SUPPLIERS DISCLAIM ALL OTHER WARRANTIES AND CONDITIONS, WHETHER EXPRESS, STATUTORY OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES AND CONDITIONS OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE WITH REGARD TO THE SOFTWARE PRODUCT AND ANY OTHER PRODUCT OR GOODS PROVIDED BY DAE. THIS LIMITED WARRANTY GIVES YOU SPECIFIC LEGAL RIGHTS. YOU MAY HAVE OTHERS, WHICH VARY FROM JURISDICTION TO JURISDICTION. 
+
+13.3	NO LIABILITY FOR CONSEQUENTIAL DAMAGES. TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL DAE, ITS SUBSIDIARIES, PARTNERS, OFFICERS, DIRECTORS, SHAREHOLDERS OR SUPPLIERS BE LIABLE FOR ANY SPECIAL, INCIDENTAL, INDIRECT, OR CONSEQUENTIAL DAMAGES WHATSOEVER (INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF BUSINESS PROFITS, BUSINESS INTERRUPTION, LOSS OF BUSINESS INFORMATION, LOSS OF GOODWILL OR ANY OTHER PECUNIARY LOSS) ARISING OUT OF THE USE OF OR INABILITY TO USE THE SOFTWARE PRODUCT, OR ANY OTHER PRODUCT OR GOODS PROVIDED BY DAE OR ANY PORTION THEREOF, EVEN IF DAE HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. BECAUSE SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OR LIMITATION OF LIABILITY FOR CONSEQUENTIAL OR INCIDENTAL DAMAGES, THE ABOVE LIMITATION MAY NOT APPLY TO YOU. 
+
+
+Revised: April 2025

@@ -1,0 +1,38 @@
+{
+    "install": [
+        {
+            "hash": "nhNgUDVuBumyuYR2pAKbN24PsCHTvloy8V3D8qhTL9s=",
+            "origin": "AppHtml/Charts/ChartControl.js"
+        },
+        {
+            "hash": "YmYXwdEGMmhOZdvtlj22f4szAa9honotliCf/aPrbZs=",
+            "origin": "AppHtml/Charts/ChartBase/ChartBase.js"
+        },
+        {
+            "hash": "O7iTz2mDDVgL18kxfqnSUhfFtwL6jacg9TjXJbgwDao=",
+            "origin": "AppHtml/Charts/Chartjs/chart.min.js"
+        },
+        {
+            "hash": "3vgQBxywuhNJVE50ae9mzhi2sPRgkTdU8aiI0CSYHog=",
+            "origin": "AppHtml/Charts/Chartjs/ChartjsRenderer.js"
+        },
+        {
+            "hash": "dYOIi4gEgeDcWVNfV83t4ppgCsVKWbOJ2s88yXkbk60=",
+            "origin": "AppHtml/Charts/Chartjs/LICENSE.txt"
+        },
+        {
+            "hash": "nhNgUDVuBumyuYR2pAKbN24PsCHTvloy8V3D8qhTL9s=",
+            "origin": "AppHtml/Charts/ChartControl.js"
+        },
+        {
+            "hash": "O7iTz2mDDVgL18kxfqnSUhfFtwL6jacg9TjXJbgwDao=",
+            "origin": "AppHtml/Charts/Chartjs/chart.min.js"
+        },
+        {
+            "hash": "3vgQBxywuhNJVE50ae9mzhi2sPRgkTdU8aiI0CSYHog=",
+            "origin": "AppHtml/Charts/Chartjs/ChartjsRenderer.js"
+        }
+    ],
+    "upstream": "https://packages.dataflex.dev/api/v1/packages/DataFlex-dev/Charts",
+    "version": 1
+}

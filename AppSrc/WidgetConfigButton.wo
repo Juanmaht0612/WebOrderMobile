@@ -1,0 +1,296 @@
+﻿Use cWebModalDialog.pkg
+Use cWebPanel.pkg
+Use cWebButton.pkg
+Use cWebHtmlBox.pkg
+Use cWebColorForm.pkg
+Use cWebWidgetConfigurationWizard.pkg
+Use cWebLabel.pkg
+Use cWebCheckbox.pkg
+Use cWebSpacer.pkg
+
+Object oWidgetConfigButton is a cWebWidgetConfigurationWizard
+    Set psCaption to "Configure button navigation "
+    Set piMinWidth to 500
+    Set piMinHeight to 200
+    Set pbServerOnSubmit to True
+    Set pbFocusFirstOnShow to False  
+    
+    Function IsValidHexColor String sValue Returns Boolean
+        Integer iLen iPos
+        String sChar
+    
+        Move (Length(sValue)) to iLen
+        If (iLen = 7 and (Left(sValue,1) = "#")) Begin
+            For iPos from 2 to 7
+                Move (Mid(sValue,1,iPos)) to sChar
+                If (not((sChar >= "0" and sChar <= "9") or ;
+                        (sChar >= "A" and sChar <= "F") or ;
+                        (sChar >= "a" and sChar <= "f"))) Begin
+                    Function_Return False
+                End
+            Loop
+        End
+        Else Begin
+            Function_Return False
+        End
+    
+        Function_Return True
+    End_Function
+
+    
+    Object oMainPanel is a cWebPanel
+        Set piColumnCount to 3
+        
+        Object oInfoLabel is a cWebLabel
+            Set psCaption to "Button navigates to:"
+            Set piColumnSpan to 2
+        End_Object
+        
+        Object oSwitchType is a cWebCheckbox
+            Set psCSSClass to "FlipSwitch"
+            Set psCaption to "Custom"
+            Set pbServerOnChange to True
+            Set psChecked to True
+            Set psUnchecked to False
+            Set piColumnIndex to 2
+
+            Procedure OnChange String sNewValue String sOldValue
+                If (sNewValue = True) Begin
+                    WebSet pbRender of oInternal to False
+                    WebSet pbRender of oCustom to True
+                    
+                End
+                Else Begin
+                    WebSet pbRender of oInternal to True
+                    WebSet pbRender of oCustom to False
+                End          
+            End_Procedure
+        End_Object
+        
+        Object oInternal is a cWebGroup  
+            Set pbShowCaption to False      
+            
+            Object oActionRadio1 is a cWebRadio
+                Set piColumnSpan to 0
+                Set psCaption to "Customer Query"
+                Set psRadioValue to "CustomerQuery"
+            End_Object
+            
+            Object oActionRadio2 is a cWebRadio
+                Set piColumnSpan to 0
+                Set psCaption to "Orders Query"
+                Set psRadioValue to "OrdersQuery"
+            End_Object
+            
+            Object oActionRadio3 is a cWebRadio
+                Set piColumnSpan to 0
+                Set psCaption to "SalesPerson Query"
+                Set psRadioValue to "SalesPersonQuery"
+            End_Object
+            
+            Object oActionRadio4 is a cWebRadio
+                Set piColumnSpan to 0
+                Set psCaption to "New Customer"
+                Set psRadioValue to "NewCustomer"
+            End_Object
+            
+            Object oActionRadio5 is a cWebRadio
+                Set piColumnSpan to 0
+                Set psCaption to "New Order"
+                Set psRadioValue to "NewOrder"
+            End_Object
+            
+            Object oActionRadio6 is a cWebRadio
+                Set piColumnSpan to 0
+                Set psCaption to "Product Query"
+                Set psRadioValue to "ProductQuery"
+            End_Object
+        End_Object    
+            
+        Object oCustom is a cWebGroup
+            Set pbShowCaption to False
+            Set pbRender to False
+            Set piColumnCount to 10
+            
+            Object oButtonTitle is a cWebForm
+                Set psLabel to "Label: "
+                Set piColumnSpan to 9
+                Set piLabelOffset to 70
+            End_Object
+    
+            Object oUrlForm is a cWebForm
+                Set psLabel to "URL: "
+                Set piColumnSpan to 9
+                Set piLabelOffset to 70
+                Set piColumnIndex to 0
+            End_Object
+            
+            Object oInfoIcon is a cWebHtmlBox
+                Set piColumnSpan to 1
+                Set piColumnIndex to 9
+                Set psCSSClass to "WidgetInfoIcon"
+                Set psHtml to '<h1 class="infoIcon" tabindex="0" data-tooltip="For external links, include the full address — e.g. https://www.dataflex.dev or mailto:info@dataaccess.eu">i</h1>'
+            End_Object
+
+            Object oRadioHeader is a cWebLabel
+                Set psCaption to "Opens as: "
+                Set piColumnSpan to 3
+                Set piRowIndex to 2
+                Set piColumnIndex to 0
+            End_Object
+            
+            Object oNavigationTypeRadio1 is a cWebRadio
+                Set piColumnSpan to 4
+                Set psCaption to "Current Window"
+                Set psRadioValue to btCurrentWindow
+                Set piColumnIndex to 0
+            End_Object
+    
+            Object oNavigationTypeRadio2 is a cWebRadio
+                Set piColumnSpan to 3
+                Set psCaption to "New Tab"
+                Set psRadioValue to btNewTab
+                Set piColumnIndex to 4
+            End_Object
+    
+            Object oNavigationTypeRadio3 is a cWebRadio
+                Set piColumnSpan to 3
+                Set psCaption to "New Window"
+                Set psRadioValue to btNewWindow
+                Set piColumnIndex to 7
+            End_Object
+        End_Object        
+       
+        Object oColorPicker is a cWebColorForm
+            Set piRowIndex to 4
+            Set piColumnIndex to 0
+            Set pbServerOnChange to True
+            Set psLabel to "Button color:"
+            Set piColumnSpan to 2
+            
+            Procedure OnChange String sNewValue String sOldValue
+                Boolean bValid
+                
+                Move (IsValidHexColor(Self, sNewValue)) to bValid 
+                
+                If (not(bValid)) Begin
+                    Send ShowInfoBalloon "" (SFormat("%1 is not a valid Hex color code, Expected format: #1A2B3C", sNewValue)) 
+                    WebSet psValue to sOldValue   
+                    Procedure_Return
+                End
+            End_Procedure
+        End_Object
+
+        Object oResetColor is a cWebButton
+            Set piRowIndex to 4
+            Set piColumnIndex to 2
+            Set psCaption to "Reset"
+            Set pbServerOnClick to True
+            
+            Procedure OnClick
+                WebSet psValue of oColorPicker to "#348EE6"
+            End_Procedure
+        End_Object
+        
+        Object oSpacer is a cWebSpacer
+        End_Object
+    End_Object
+
+    Object oBottomPanel is a cWebPanel
+        Set piColumnCount to 6
+        Set peRegion to prBottom
+
+        Object oOkButton is a cWebButton
+            Set psCaption to C_$OK
+            Set piColumnSpan to 1
+            Set piColumnIndex to 4
+
+            Procedure OnClick
+                Send Ok
+            End_Procedure
+        End_Object 
+
+        Object oCancelButton is a cWebButton
+            Set psCaption to C_$Cancel
+            Set piColumnSpan to 1
+            Set piColumnIndex to 5
+
+            Procedure OnClick
+                Send Cancel
+            End_Procedure
+        End_Object 
+    End_Object 
+
+    Procedure OnSubmit
+        Send Ok
+    End_Procedure
+    
+    Procedure Ok        
+        Forward Send Ok
+    End_Procedure
+
+    Procedure Cancel
+        Forward Send Cancel
+    End_Procedure
+    
+    Procedure OnPopulateWizard tWidgetConfigProp[] aConfigurableProps tWidgetConfigPropValue[] aCurPropValues
+        Integer eNavType
+        String sUrl sTitle sButtonColor sAction
+        
+        Get GetPropValue aCurPropValues '' "psAction" to sAction
+        Get GetPropValue aCurPropValues '' "psTitle" to sTitle
+        Get GetPropValue aCurPropValues '' "psUrl" to sUrl
+        Get GetPropValue aCurPropValues '' "peNavType" to eNavType
+        Get GetPropValue aCurPropValues '' "psButtonColor" to sButtonColor
+     
+        WebSet psValue of oButtonTitle to sTitle
+        WebSet psValue of oUrlForm to sUrl
+        WebSet psValue of oNavigationTypeRadio1 to eNavType
+        
+        If (sButtonColor = "") Begin
+            WebSet psValue of oColorPicker to "#348EE6"
+        End
+        Else Begin
+            WebSet psValue of oColorPicker to sButtonColor
+        End
+        
+        If (sAction = "Custom") Begin
+            WebSet pbRender of oInternal to False
+            WebSet pbRender of oCustom to True
+            WebSet psValue of oSwitchType to True
+        End
+        Else Begin
+            WebSet pbRender of oInternal to True
+            WebSet pbRender of oCustom to False
+            WebSet psValue of oActionRadio1 to sAction
+            WebSet psValue of oSwitchType to False
+        End
+        
+        
+    End_Procedure
+    
+    Procedure OnGetConfigValues tWidgetConfigPropValue[] ByRef aNewPropValues
+        Integer eNavType
+        String sUrl sTitle sButtonColor sAction
+        Boolean bCustom
+        
+        WebGet psValue of oButtonTitle to sTitle
+        WebGet psValue of oUrlForm to sUrl
+        WebGet psValue of oNavigationTypeRadio1 to eNavType
+        WebGet psValue of oColorPicker to sButtonColor
+        
+        Get GetChecked of oSwitchType to bCustom
+        If (bCustom) Begin
+            Move "Custom" to sAction
+        End
+        Else Begin
+            WebGet psValue of oActionRadio1 to sAction
+        End
+        
+        Send SetPropValue (&aNewPropValues) "" "psAction" sAction
+        Send SetPropValue (&aNewPropValues) "" "psTitle" sTitle
+        Send SetPropValue (&aNewPropValues) "" "psUrl" sUrl
+        Send SetPropValue (&aNewPropValues) "" "peNavType" eNavType
+        Send SetPropValue (&aNewPropValues) "" "psButtonColor" sButtonColor
+    End_Procedure
+End_Object

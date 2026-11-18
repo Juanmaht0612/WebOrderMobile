@@ -1,0 +1,14 @@
+[Header]
+Mask=*.src;*.vw;*.sl;*.dg;*.rv;*.bp;*.pkg;*.wo;*.dd;*.inc;*.tpl;*.dfo;*.asp;*.asa;*.html;*.css;*.js
+Active=0
+SubDirectories=1
+WholeWordOnly=0
+RegularExpression=0
+SearchWhere=0
+Location=C:\Tarea 16\WebOrderMobile\IdeSrc\juanm_FindInFiles.dsk
+[C:\Tarea 16\WebOrderMobile\AppSrc]
+IsEnabled=1
+[C:\Tarea 16\WebOrderMobile\DDSrc]
+IsEnabled=1
+[C:\Tarea 16\WebOrderMobile\AppHTML]
+IsEnabled=1

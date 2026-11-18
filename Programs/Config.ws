@@ -1,0 +1,13 @@
+[Workspace]
+Home=..\
+AppSrcPath=AppSrc
+AppHTMLPath=AppHTML
+BitmapPath=Bitmaps
+IdeSrcPath=IdeSrc
+DataPath=Data
+DDSrcPath=DDSrc
+HelpPath=.
+ProgramPath=Programs
+FileList=Data\Filelist.cfg
+Description=WebOrderMobile
+ConnectionIni=Data\DfConnId.ini

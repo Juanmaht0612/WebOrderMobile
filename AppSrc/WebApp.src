@@ -1,0 +1,17 @@
+﻿Use cApplication.pkg
+Use cWebApp.pkg
+Use cWebViewStack.pkg
+
+Register_Object oDashboard
+
+Object oApplication is a cApplication
+End_Object
+
+Object oWebApp is a cWebapp
+    Set psTheme to "Df_Material"
+    Set peAlignView to alignCenter
+    Set psApplicationTitle to "Web Order Mobile"
+
+    Object oViewStack is a cWebviewStack
+    End_Object
+End_Object

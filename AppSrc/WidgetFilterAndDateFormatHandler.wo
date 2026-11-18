@@ -1,0 +1,358 @@
+﻿Use cWebObject.pkg
+
+Object oWidgetFilterAndDateFormatHandler is a cWebObject
+    
+    Function CurrentYearStartDate DateTime dtToday Returns DateTime
+        DateTime dtStart
+        
+        Move (DateSet((DateGetYear(dtToday)), 1, 1)) to dtStart
+        Function_Return dtStart
+    End_Function
+    
+    Function LastYearStartDate DateTime dtToday Returns DateTime
+        DateTime dtStart
+        Integer iYear
+        
+        Move ((DateGetYear(dtToday)) - 1) to iYear
+        
+        Move (DateSet(iYear, 1, 1)) to dtStart
+        Function_Return dtStart
+    End_Function
+    
+    Function LastYearEndDate DateTime dtToday Returns DateTime
+        DateTime dtEnd
+        Integer iYear
+        
+        Move ((DateGetYear(dtToday)) - 1) to iYear
+        Move (DateSet(iYear, 12, 31)) to dtEnd
+        Function_Return dtEnd
+    End_Function
+    
+    Function CurrentMonthStartDate DateTime dtToday Returns DateTime
+        Integer iYear iMonth
+        DateTime dtStart
+        
+        Move (DateGetYear(dtToday)) to iYear
+        Move (DateGetMonth(dtToday)) to iMonth
+        Move (DateSet(iYear, iMonth, 1)) to dtStart
+        Function_Return dtStart
+    End_Function
+    
+    Function LastMonthStartDate DateTime dtToday Returns DateTime
+        Integer iYear iMonth
+        DateTime dtStart
+        
+        Move (DateGetYear(dtToday)) to iYear
+        Move (DateGetMonth(dtToday)) to iMonth
+        
+        If (iMonth = 1) Begin
+            Move 12 to iMonth
+            Move (iYear - 1) to iYear
+        End
+        Else Begin
+            Move (iMonth - 1) to iMonth
+        End
+        
+        Move (DateSet(iYear, iMonth, 1)) to dtStart
+        Function_Return dtStart
+    End_Function
+    
+    Function LastMonthEndDate DateTime dtToday Returns DateTime
+        DateTime dtStartOfMonth dtEndOfLastMonth
+        Integer iYear iMonth
+        
+        Move (DateGetYear(dtToday)) to iYear
+        Move (DateGetMonth(dtToday)) to iMonth
+        
+        Move (DateSet(iYear, iMonth, 1)) to dtStartOfMonth
+        Move (DateAddDay(dtStartOfMonth, -1)) to dtEndOfLastMonth
+        Function_Return dtEndOfLastMonth
+    End_Function
+    
+    Function CurrentWeekStartDate DateTime dtToday Returns DateTime
+        Integer iDayOfWeek
+        DateTime dtStart
+        
+        Move (DateGetDayofWeekISO(dtToday)) to iDayOfWeek
+        
+        Move (DateAddDay(dtToday, -(iDayOfWeek - 1))) to dtStart
+        Function_Return dtStart
+    End_Function
+    
+    Function LastWeekStartDate DateTime dtToday Returns DateTime
+        Integer iDayOfWeek
+        DateTime dtStart
+        
+        Move (DateGetDayofWeekISO(dtToday)) to iDayOfWeek
+        Move (DateAddDay(dtToday, -(iDayOfWeek -1))) to dtStart
+        Move (DateAddDay(dtStart, -7)) to dtStart
+        Function_Return dtStart
+    End_Function
+    
+    Function LastWeekEndDate DateTime dtToday Returns DateTime
+        Integer iDayOfWeek
+        DateTime dtStart
+        
+        Move (DateGetDayofWeekISO(dtToday)) to iDayOfWeek
+        Move (DateAddDay(dtToday, -(iDayOfWeek -1))) to dtStart
+        Move (DateAddDay(dtStart, -1)) to dtStart
+        Function_Return dtStart
+    End_Function
+    
+    Function StartDateByFilterType String sFilter Returns DateTime
+        DateTime dtStartDate dtToday
+        
+        Move (CurrentDateTime()) to dtToday
+        
+        Case Begin
+            Case (sFilter = "year")
+                Get CurrentYearStartDate dtToday to dtStartDate
+                Case Break
+            Case (sFilter = "month")
+                Get CurrentMonthStartDate dtToday to dtStartDate
+                Case Break
+            Case (sFilter = "week")
+                Get CurrentWeekStartDate dtToday to dtStartDate
+                Case Break
+            Case (sFilter = "last_year")
+                Get LastYearStartDate dtToday to dtStartDate
+                Case Break
+            Case (sFilter = "last_month")
+                Get LastMonthStartDate dtToday to dtStartDate
+                Case Break
+            Case (sFilter = "last_week")
+                Get LastWeekStartDate dtToday to dtStartDate
+                Case Break
+        Case End
+        
+        Function_Return dtStartDate
+    End_Function
+    
+    Function EndDateByFilterType String sFilter Returns DateTime
+        DateTime dtEndDate dtToday
+        
+        Move (CurrentDateTime()) to dtToday
+        
+        Case Begin
+            Case (sFilter = "year")
+                Move dtToday to dtEndDate
+                Case Break
+            Case (sFilter = "month")
+                Move dtToday to dtEndDate
+                Case Break
+            Case (sFilter = "week")
+                Move dtToday to dtEndDate
+                Case Break
+            Case (sFilter = "last_year")
+                Get LastYearEndDate dtToday to dtEndDate
+                Case Break
+            Case (sFilter = "last_month")
+                Get LastMonthEndDate dtToday to dtEndDate
+                Case Break
+            Case (sFilter = "last_week")
+                Get LastWeekEndDate dtToday to dtEndDate
+                Case Break
+        Case End
+        
+        Function_Return dtEndDate
+    End_Function
+    
+    Function CompareStartDateByFilterType String sFilter Returns DateTime
+        DateTime dtToday dtStartDate dtJan4 dtThisWeekStart dtWeek1Monday
+        Integer iYear iMonth iDayOfWeek iWeek
+        
+        Move (CurrentDateTime()) to dtToday
+        
+        Case Begin
+            Case (sFilter = "year")
+                Move ((DateGetYear(dtToday)) - 1) to iYear
+                Move (DateSet(iYear, 1, 1)) to dtStartDate
+                Case Break
+            Case (sFilter = "month")
+                Move (DateGetYear(dtToday) - 1) to iYear
+                Move (DateGetMonth(dtToday)) to iMonth
+                Move (DateSet(iYear, iMonth, 1)) to dtStartDate
+                Case Break
+            Case (sFilter = "week")
+                Move (DateGetDayofWeekISO(dtToday)) to iDayOfWeek
+                Move (DateAddDay(dtToday, - (iDayOfWeek - 1))) to dtThisWeekStart
+                Move (DateGetWeekOfYearISO(dtThisWeekStart)) to iWeek
+                Move (DateGetYear(dtToday) - 1) to iYear
+                Move (DateSet(iYear, 1, 4)) to dtJan4
+                Move (DateAddDay(dtJan4, - (DateGetDayOfWeekISO(dtJan4) - 1))) to dtWeek1Monday
+                Move (DateAddDay(dtWeek1Monday, (iWeek - 1) * 7)) to dtStartDate
+                Case Break
+            Case (sFilter = "last_year")
+                Move ((DateGetYear(dtToday)) - 2) to iYear
+                Move (DateSet(iYear, 1, 1)) to dtStartDate
+                Case Break
+            Case (sFilter = "last_month")
+                Move (DateAddMonth(dtToday, - 1)) to dtStartDate
+                Move (DateAddYear(dtStartDate, - 1)) to dtStartDate
+                Move (DateSet(DateGetYear(dtStartDate), DateGetMonth(dtStartDate), 1)) to dtStartDate
+                Case Break
+            Case (sFilter = "last_week")
+                Move (DateGetDayofWeekISO(dtToday)) to iDayOfWeek
+                Move (DateAddDay(dtToday, - (iDayOfWeek - 1))) to dtThisWeekStart
+                Move (DateAddDay(dtThisWeekStart, -7)) to dtThisWeekStart
+                Move (DateGetWeekOfYearISO(dtThisWeekStart)) to iWeek
+                Move (DateGetYear(dtToday) - 1) to iYear
+                Move (DateSet(iYear, 1, 4)) to dtJan4
+                Move (DateAddDay(dtJan4, - (DateGetDayOfWeekISO(dtJan4) - 1))) to dtWeek1Monday
+                Move (DateAddDay(dtWeek1Monday, (iWeek - 1) * 7)) to dtStartDate
+                Case Break
+        Case End
+        
+        Function_Return dtStartDate
+    End_Function
+    
+    Function CompareEndDateByFilterType String sFilter Returns DateTime
+        DateTime dtToday dtStartDate dtEndDate
+        Integer iDayOfWeek
+        
+        Move (CurrentDateTime()) to dtToday
+        Get CompareStartDateByFilterType sFilter to dtStartDate
+        
+        Case Begin
+            Case (sFilter = "year")
+                Move (DateAddDay(dtStartDate, (DateGetDayOfYear(dtToday) - 1))) to dtEndDate
+                Case Break
+    
+            Case (sFilter = "month")
+                Move (DateAddDay(dtStartDate, (DateGetDay(dtToday) - 1))) to dtEndDate
+                Case Break
+    
+            Case (sFilter = "week")
+                Move (DateGetDayofWeekISO(dtToday)) to iDayOfWeek
+                Move (DateAddDay(dtStartDate, iDayOfWeek - 1)) to dtEndDate
+                Case Break
+    
+            Case (sFilter = "last_year")
+                Move (DateAddDay(dtStartDate, 364)) to dtEndDate
+                Case Break
+    
+            Case (sFilter = "last_month")
+                Move (DateAddMonth(dtStartDate, 1)) to dtEndDate
+                Move (DateAddDay(dtEndDate, -1)) to dtEndDate
+                Case Break
+    
+            Case (sFilter = "last_week")
+                Move (DateAddDay(dtStartDate, 6)) to dtEndDate
+                Case Break
+        Case End
+    
+        Function_Return dtEndDate
+    End_Function
+    
+    Function FullCompareEndDateByFilterType String sFilter Returns DateTime
+        DateTime dtStart dtEnd
+    
+        Get CompareStartDateByFilterType sFilter to dtStart
+    
+        Case Begin
+            Case (sFilter = "year")
+                Move (DateSet(DateGetYear(dtStart), 12, 31)) to dtEnd
+                Case Break
+    
+            Case (sFilter = "month")
+                // End = first day of next month - 1 day
+                Move (DateAddMonth(dtStart, 1)) to dtEnd
+                Move (DateAddDay(dtEnd, -1)) to dtEnd
+                Case Break
+    
+            Case (sFilter = "week")
+                Move (DateAddDay(dtStart, 6)) to dtEnd
+                Case Break
+    
+            Case (sFilter = "last_year")
+                Move (DateSet(DateGetYear(dtStart), 12, 31)) to dtEnd
+                Case Break
+    
+            Case (sFilter = "last_month")
+                Move (DateAddMonth(dtStart, 1)) to dtEnd
+                Move (DateAddDay(dtEnd, -1)) to dtEnd
+                Case Break
+    
+            Case (sFilter = "last_week")
+                Move (DateAddDay(dtStart, 6)) to dtEnd
+                Case Break
+        Case End
+    
+        Function_Return dtEnd
+    End_Function
+    
+    Function DateGetWeekDayName Integer iDay Returns String
+        String sDay
+        
+        Case Begin
+            Case (iDay = 1)
+                Move "Sunday" to sDay
+                Case Break
+            Case (iDay = 2)
+                Move "Monday" to sDay
+                Case Break
+            Case (iDay = 3)
+                Move "Tuesday" to sDay
+                Case Break
+            Case (iDay = 4)
+                Move "Wednesday" to sDay
+                Case Break
+            Case (iDay = 5)
+                Move "Thursday" to sDay
+                Case Break
+            Case (iDay = 6)
+                Move "Friday" to sDay
+                Case Break
+            Case (iDay = 7)
+                Move "Saturday" to sDay
+                Case Break
+        Case End
+        
+        Function_Return sDay
+    End_Function
+
+    Function DateGetMonthShortName Integer iMonth Returns String
+        String sMonth
+
+        Case Begin
+            Case (iMonth = 1)
+                Move "Jan" to sMonth
+                Case Break
+            Case (iMonth = 2)
+                Move "Feb" to sMonth
+                Case Break
+            Case (iMonth = 3)
+                Move "Mar" to sMonth
+                Case Break
+            Case (iMonth = 4)
+                Move "Apr" to sMonth
+                Case Break
+            Case (iMonth = 5)
+                Move "May" to sMonth
+                Case Break
+            Case (iMonth = 6)
+                Move "Jun" to sMonth
+                Case Break
+            Case (iMonth = 7)
+                Move "Jul" to sMonth
+                Case Break
+            Case (iMonth = 8)
+                Move "Aug" to sMonth
+                Case Break
+            Case (iMonth = 9)
+                Move "Sep" to sMonth
+                Case Break
+            Case (iMonth = 10)
+                Move "Oct" to sMonth
+                Case Break
+            Case (iMonth = 11)
+                Move "Nov" to sMonth
+                Case Break
+            Case (iMonth = 12)
+                Move "Dec" to sMonth
+                Case Break
+        Case End
+        
+        Function_Return sMonth
+    End_Function
+End_Object

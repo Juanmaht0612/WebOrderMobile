@@ -1,0 +1,136 @@
+﻿Use cWebWidget.pkg
+Use WidgetConfigButton.wo
+Use cSampleWidget.pkg
+
+Composite cWidgetButton is a cSampleWidget
+    Set psCSSClass to "ButtonWidget"
+    Set psWidgetCaption to "Button"
+    Set psWidgetDescription to "Internal or Custom navigation"
+    Set psWidgetName to "cWidgetButton"
+    Set piRowSpan to 2
+    Set piColumnSpan to 4
+    Set piDefaultColSpan to 4
+    Set piDefaultRowSpan to 1
+    Set psRowHeights to "0/1fr"
+    Set pbShowCaption to False
+    Set pbShowBorder to True
+    Set phoConfigWizard to oWidgetConfigButton
+
+    { WebProperty=Server }
+    Property String psAction "Custom"
+    
+    { WebProperty=Server }
+    Property String psUrl
+    
+    { WebProperty=Server }
+    Property String psTitle "Tile"
+    
+    { WebProperty=Server }
+    Property Integer peNavType btCurrentWindow
+    
+    { WebProperty=Server }
+    Property String psButtonColor "#348EE6"
+ 
+    Object oButton is a cWebButton
+        Set psCaption to "Tile"
+        Set pbFillHeight to True
+        Set psCSSClass to "WidgetActionButton"
+        
+        WebRegisterPath ntNavigateForwardCustom oSelectOrdersByCustomer
+        WebRegisterPath ntNavigateForwardCustom oSelectOrder
+        WebRegisterPath ntNavigateForwardCustom oSelectSalesPerson
+        WebRegisterPath ntNavigateForwardCustom oZoomCustomer
+        WebRegisterPath ntNavigateForwardCustom oZoomOrder
+        WebRegisterPath ntNavigateForwardCustom oDemoGrouping
+        
+        Procedure OnClick
+            String sAction sUrl
+            Integer eNavType
+            
+            WebGet psAction of (Widget(Self)) to sAction
+            
+            If (sAction = "Custom") Begin
+                WebGet psUrl of (Widget(Self)) to sUrl
+                WebGet peNavType of (Widget(Self)) to eNavType
+                
+                If (sUrl <> "") Begin
+                    Send NavigateToPage sUrl eNavType
+                End                
+            End
+            Else Begin
+                Case Begin
+                    Case (sAction = "CustomerQuery")
+                        Send NavigateForward of oSelectOrdersByCustomer Self
+                        Break
+                    Case (sAction = "OrdersQuery")
+                        Send NavigateForward of oSelectOrder Self
+                        Break
+                    Case (sAction = "SalesPersonQuery")
+                        Send NavigateForward of oSelectSalesPerson Self
+                        Break
+                    Case (sAction = "NewCustomer")
+                        Send NavigateForward of oZoomCustomer Self
+                        Break
+                    Case (sAction = "NewOrder")
+                        Send NavigateForward of oZoomOrder Self
+                        Break
+                    Case (sAction = "ProductQuery")
+                        Send NavigateForward of oDemoGrouping Self
+                        Break
+                    Case Else
+                        Error DFERR_PROGRAM "Unimplemented action"
+                Case End
+            End
+        End_Procedure
+    End_Object
+    
+    Procedure OnGetConfigurableProps tWidgetConfigProp[]  ByRef aConfigurableProps
+        Forward Send OnGetConfigurableProps (&aConfigurableProps)
+        
+        Get CreateConfigurableProp Self (RefFunc(psAction)) to aConfigurableProps[-1]
+        Get CreateConfigurableProp Self (RefFunc(psTitle)) to aConfigurableProps[-1]
+        Get CreateConfigurableProp Self (RefFunc(psURL)) to aConfigurableProps[-1]
+        Get CreateConfigurableProp Self (RefFunc(peNavType)) to aConfigurableProps[-1]
+        Get CreateConfigurableProp Self (RefFunc(psButtonColor)) to aConfigurableProps[-1]
+    End_Procedure
+        
+    Procedure Update
+        String sAction sTitle sButtonColor
+        Boolean bFromWizard bEditMode
+        Handle hoInternal
+        
+        WebGet psAction to sAction
+        WebGet psButtonColor to sButtonColor
+        
+        If (sAction = "Custom") Begin
+            WebGet psTitle to sTitle
+            WebSet psCaption of oButton to sTitle
+        End
+        Else Begin
+            Case Begin
+                Case (sAction = "CustomerQuery")
+                    WebSet psCaption of oButton to "Customer Query"
+                    Break
+                Case (sAction = "OrdersQuery")
+                    WebSet psCaption of oButton to "Orders Query"
+                    Break
+                Case (sAction = "SalesPersonQuery")
+                    WebSet psCaption of oButton to "SalesPerson Query"
+                    Break
+                Case (sAction = "NewCustomer")
+                    WebSet psCaption of oButton to "New Customer"
+                    Break
+                Case (sAction = "NewOrder")
+                    WebSet psCaption of oButton to "New Order"
+                    Break
+                Case (sAction = "ProductQuery")
+                    WebSet psCaption of oButton to "Product Query"
+                    Break
+                Case Else
+                    Error DFERR_PROGRAM "Unimplemented action"
+            Case End
+        End
+        
+        WebSet psBackgroundColor of oButton to sButtonColor
+    End_Procedure
+End_Composite

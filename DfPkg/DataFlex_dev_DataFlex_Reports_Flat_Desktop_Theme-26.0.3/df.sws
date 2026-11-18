@@ -1,0 +1,27 @@
+{
+    "dependencies": [
+        "DataFlex-dev/DataFlex Reports Web Shared#~26.0.0",
+        "DataFlex-dev/Web UI Flat Desktop Theme#~1.0.0"
+    ],
+    "description": "Flat Desktop theme for DataFlex Reports",
+    "df": 26.0,
+    "package": {
+        "df-max": 26.0,
+        "df-min": 26.0,
+        "htmlIncludes": [
+            "DataFlexReports/CssThemes/Df_Flat_Desktop/Previewer.css",
+            "DataFlexReports/CssThemes/Df_Flat_Desktop/Integration.css"
+        ],
+        "icon": "DR.png",
+        "install": [
+            "${AppHtml}/DataFlexReports/CssThemes/Df_Flat_Desktop"
+        ],
+        "license": "DocumentRef-DataFlexReports",
+        "licenseFile": "LICENSE",
+        "version": "26.0.3"
+    },
+    "paths": {
+        "fileList": "DummyFilelist.cfg"
+    },
+    "workspaceName": "DataFlex Reports Flat Desktop Theme"
+}

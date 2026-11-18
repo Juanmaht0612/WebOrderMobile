@@ -1,0 +1,22 @@
+﻿<svg width="25" height="50" viewBox="0 0 25 50" xmlns="http://www.w3.org/2000/svg">
+  <!-- Columns centered in 20px, with 3px padding on left and right -->
+  <!-- Column centers: 6.5px and 13.5px -->
+  <!-- Rows: 10, 20, 30, 40 -->
+  <!-- Dot radius: 2.5 -->
+
+  <!-- Row 1 -->
+  <circle cx="6.5" cy="10" r="2.5" fill="white"/>
+  <circle cx="14.5" cy="10" r="2.5" fill="white"/>
+
+  <!-- Row 2 -->
+  <circle cx="6.5" cy="20" r="2.5" fill="white"/>
+  <circle cx="14.5" cy="20" r="2.5" fill="white"/>
+
+  <!-- Row 3 -->
+  <circle cx="6.5" cy="30" r="2.5" fill="white"/>
+  <circle cx="14.5" cy="30" r="2.5" fill="white"/>
+
+  <!-- Row 4 -->
+  <circle cx="6.5" cy="40" r="2.5" fill="white"/>
+  <circle cx="14.5" cy="40" r="2.5" fill="white"/>
+</svg>

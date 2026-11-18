@@ -1,0 +1,22 @@
+{
+    "install": [
+        {
+            "hash": "+4XxsRsTLgZkqxKS5y1fH+PUuYVAHDSdNGKJFGAEmME=",
+            "origin": "AppHtml/DataFlexReports/CssThemes/Df_Material/Integration.css"
+        },
+        {
+            "hash": "OTyuq8rkIhWzs+klqua2zxg10gNhARvoPpCurDlrZKY=",
+            "origin": "AppHtml/DataFlexReports/CssThemes/Df_Material/Previewer.css"
+        },
+        {
+            "hash": "OTyuq8rkIhWzs+klqua2zxg10gNhARvoPpCurDlrZKY=",
+            "origin": "AppHtml/DataFlexReports/CssThemes/Df_Material/Previewer.css"
+        },
+        {
+            "hash": "+4XxsRsTLgZkqxKS5y1fH+PUuYVAHDSdNGKJFGAEmME=",
+            "origin": "AppHtml/DataFlexReports/CssThemes/Df_Material/Integration.css"
+        }
+    ],
+    "upstream": "https://packages.dataflex.dev/api/v1/packages/DataFlex-dev/DataFlex%20Reports%20Material%20Theme",
+    "version": 1
+}

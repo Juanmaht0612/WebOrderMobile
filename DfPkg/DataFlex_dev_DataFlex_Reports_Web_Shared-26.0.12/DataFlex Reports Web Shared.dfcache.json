@@ -1,0 +1,54 @@
+{
+    "install": [
+        {
+            "hash": "Mfp3NxCLf+Sg3NoUiMj93vX0LI+9VxYH81tQkZG7+P0=",
+            "origin": "AppHtml/DataFlexReports/Fonts/dataflex-reports-iconset.eot"
+        },
+        {
+            "hash": "T5EPpxmlRhDfIpX6JNugHe2W6Zg00QyzjBw4IbgjQzg=",
+            "origin": "AppHtml/DataFlexReports/Fonts/dataflex-reports-iconset.svg"
+        },
+        {
+            "hash": "IDek6jvOAifvRU5MjDIr54WRfGeKyimbsP33rB4rilA=",
+            "origin": "AppHtml/DataFlexReports/Fonts/dataflex-reports-iconset.ttf"
+        },
+        {
+            "hash": "LgoWGVBaAYzSA1yXbcx4Db1l2B9So7hlOdFy/iLIRuI=",
+            "origin": "AppHtml/DataFlexReports/Fonts/dataflex-reports-iconset.woff"
+        },
+        {
+            "hash": "jFIXYZES8wt9dEFAtrgMDjw36kue4utiLgqKAeMWzIc=",
+            "origin": "AppHtml/DataFlexReports/Fonts/FontIcons.css"
+        },
+        {
+            "hash": "QF8g5uX77OgC/sRGpwdlOd031qP/1sg1TL0bq255Bac=",
+            "origin": "AppHtml/DataFlexReports/CssThemes/ReportViewer.css"
+        },
+        {
+            "hash": "14GV4E8ChysDq1gpP7pMClhCT3tXIs490wKbb2pDHsc=",
+            "origin": "AppHtml/DataFlexReports/CssThemes/PreviewerCommon.css"
+        },
+        {
+            "hash": "dc5DzVA1wi4OjaXflLYVjFNZiq5v7r0ElWsI7zF71ME=",
+            "origin": "AppHtml/DataFlexReports/Previewer.js"
+        },
+        {
+            "hash": "jFIXYZES8wt9dEFAtrgMDjw36kue4utiLgqKAeMWzIc=",
+            "origin": "AppHtml/DataFlexReports/Fonts/FontIcons.css"
+        },
+        {
+            "hash": "QF8g5uX77OgC/sRGpwdlOd031qP/1sg1TL0bq255Bac=",
+            "origin": "AppHtml/DataFlexReports/CssThemes/ReportViewer.css"
+        },
+        {
+            "hash": "14GV4E8ChysDq1gpP7pMClhCT3tXIs490wKbb2pDHsc=",
+            "origin": "AppHtml/DataFlexReports/CssThemes/PreviewerCommon.css"
+        },
+        {
+            "hash": "dc5DzVA1wi4OjaXflLYVjFNZiq5v7r0ElWsI7zF71ME=",
+            "origin": "AppHtml/DataFlexReports/Previewer.js"
+        }
+    ],
+    "upstream": "https://packages.dataflex.dev/api/v1/packages/DataFlex-dev/DataFlex%20Reports%20Web%20Shared",
+    "version": 1
+}

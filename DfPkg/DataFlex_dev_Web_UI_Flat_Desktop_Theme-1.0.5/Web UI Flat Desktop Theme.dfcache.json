@@ -1,0 +1,282 @@
+{
+    "install": [
+        {
+            "hash": "v5Ro248X3sSW9cvNWzu0BeFZtf8FF+PFJ0Xw0wyOVPQ=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/divider-dots-horizontal.png"
+        },
+        {
+            "hash": "rSAA0jyFGT7jv/dFks+VE+r/o86RuypVH+lQtcG9WoI=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/divider-dots-vertical.png"
+        },
+        {
+            "hash": "tjbRdSNf2x9yQHBU5p9orsqmP8z7eu8ze4fyDxT6dj0=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/dataflex-mobile.css"
+        },
+        {
+            "hash": "IsW2uzrVp7xQxWdOJacWfhspyIxh4Sj+wzxPkeSAIAk=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/dataflex-mobile.eot"
+        },
+        {
+            "hash": "3CRZ1Xjl4Lp82DFc/nN+QNR3sfBYum/kw9nWjxD/6lM=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/dataflex-mobile.svg"
+        },
+        {
+            "hash": "dzBS91MVpV76s54M/+hH8O8qmFZKsXKnyASX8Zp27Eg=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/dataflex-mobile.ttf"
+        },
+        {
+            "hash": "f7i4x/p8wSjXCei50zUlF4GwcB6QDyCsy0CGl++rTHU=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/dataflex-mobile.woff"
+        },
+        {
+            "hash": "n7wKo5JZBsFpTi4K9oOq3pdp+Mqi/IvJe6gQxN+nYes=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/icons-reference.html"
+        },
+        {
+            "hash": "730rKpVhQLBzGcTniOiiyBeFmmkXdOxRaf653DxNZtg=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatin-Bold.eot"
+        },
+        {
+            "hash": "X61r2H3Ge5oiyV/egPzqYqTmtlhqi8qHpD4KVOOozvY=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatin-Bold.ttf"
+        },
+        {
+            "hash": "pzxWB1xtAMLmV+TlYxF56Y7oUF3M7zed4lYekOnhP0g=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatin-Bold.woff"
+        },
+        {
+            "hash": "uF26ULu3pN885NjOiAcKr2OL4JIyjkmBdYictGPbvEQ=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatin-BoldItalic.eot"
+        },
+        {
+            "hash": "FDMTWBJ2Jgvz6eBeaTuXTQ8FRPwOyYOblhxMG/lwgCc=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatin-BoldItalic.ttf"
+        },
+        {
+            "hash": "+UphGsDG/FPzdC2D9bDbFJ2psU0L4nConkk6lADK8ts=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatin-BoldItalic.woff"
+        },
+        {
+            "hash": "v4GUFG5JY9eH9zX3kiLNOAnwRAZda1cb1HiRsQiiX0Y=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatin-Italic.eot"
+        },
+        {
+            "hash": "k2p4Gp86hkotLhU5Z9zKKVUMEOtKD7Bw+K0dx38B8yc=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatin-Italic.ttf"
+        },
+        {
+            "hash": "AgUf77ZLzKy8+56ApWJ0DM/kXbnuSFDyXbyRFgFk6us=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatin-Italic.woff"
+        },
+        {
+            "hash": "9s6PWg/fgpWXorwbYFTqiY7CUkum0ObyvGjGX/ECzAo=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatin-Regular.eot"
+        },
+        {
+            "hash": "Lzfxlgl3sEfEsrt5mV/bdFvvf4A7FU5KvWMOfkrBCvI=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatin-Regular.ttf"
+        },
+        {
+            "hash": "PEKTJWiv2zuDPSGO7c0nOhyoJJ4lEfnBiA3XScVdqtU=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatin-Regular.woff"
+        },
+        {
+            "hash": "xE0X82ATh1RKogQpco97r2xzK1ddqaYjzsfxI+RHDuI=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinBlack-Italic.eot"
+        },
+        {
+            "hash": "+nnKj8xfF9/NQbBPYcauD4XSEWFm+GCEZaLQVAMyjkY=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinBlack-Italic.ttf"
+        },
+        {
+            "hash": "Yduwqm4MqgbUT5vl6K72UlbYIOlByTKoh/BZx9IdI+c=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinBlack-Italic.woff"
+        },
+        {
+            "hash": "Rcfnm1bpDEyAgk/kI8GYJ17AWkP1v+nm5WDBh3t9v40=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinBlack-Regular.eot"
+        },
+        {
+            "hash": "YfO8y/rnXGUazy8CJj7jnFMRYuOEqT00EqHz3a9iJkI=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinBlack-Regular.ttf"
+        },
+        {
+            "hash": "oZ6VFG4/bu7PLu+k40qGowm2JzeL0plzXQDOhjYRhp8=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinBlack-Regular.woff"
+        },
+        {
+            "hash": "4Bw5ApxNQYcqAkHoNZpttvUCvClfi1eQuETQEVdMXUQ=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinExtBd-Italic.eot"
+        },
+        {
+            "hash": "ihDnzF7E9BM+O726QzrHH8PhTya1JRdBLt4IBo65RYs=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinExtBd-Italic.ttf"
+        },
+        {
+            "hash": "PuIKNeUI7GYzIwSr3dWa81/oOblwNY87laUFeLNFxys=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinExtBd-Italic.woff"
+        },
+        {
+            "hash": "wXrlpURUVd2Yu24hKlx8miPze6RS8j6a9eKT+I3M0FM=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinExtBd-Regular.eot"
+        },
+        {
+            "hash": "+3M+d0+KjC7qQh7jOL1k2QBwYTg+nD6D8ugmqG4dWlw=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinExtBd-Regular.ttf"
+        },
+        {
+            "hash": "dm4Mpmh7xJaKfVmIZlq2rX9Vwf6XjZd5rQP2AbSzVh8=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinExtBd-Regular.woff"
+        },
+        {
+            "hash": "JIkXPXwO8wyPaUtQsecXwi/p926q0VyxYWqE7IZXEak=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinHair-Italic.eot"
+        },
+        {
+            "hash": "r0pHnwvyuITNmARxd5gaiwag7IMeXXNb9o/YpB7boiY=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinHair-Italic.ttf"
+        },
+        {
+            "hash": "lnD5LLqKN+/NkQGK7/VuapeBZSDgkJ5/vdXNnFZoYHI=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinHair-Italic.woff"
+        },
+        {
+            "hash": "L4C5Hb7WAQ6+I8SNNElO0Rm+LkMX9Yz+u7sNHX8kRlY=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinHair-Regular.eot"
+        },
+        {
+            "hash": "GxJe69b3u9e78u9WPaADq+XLECY+we9s94zGIjXSGXY=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinHair-Regular.ttf"
+        },
+        {
+            "hash": "K9np0Z4Tci1zU3K6qwNFej/8/IDCkjWyfufb3KeEW8U=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinHair-Regular.woff"
+        },
+        {
+            "hash": "9dIeEf2K8OtpdsqUA0C86ewUtGpn8+xYuL9W3otBQdc=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinLight-Italic.eot"
+        },
+        {
+            "hash": "ePWZaZ4CjrdVWkVqEDYwEm6bU/9J/WT4fiExioWexMg=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinLight-Italic.ttf"
+        },
+        {
+            "hash": "fGrT7+3yWzGABFb4OR0M7KeDPDxn7T2hhbYrHt08FwE=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinLight-Italic.woff"
+        },
+        {
+            "hash": "DzGnRu5a/0Vuk1YbqQhBeN7lHoKxsEaQjW6TdWAO1C4=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinLight-Regular.eot"
+        },
+        {
+            "hash": "6q8QYy9YA2v8GcMQDLXDYFW8SASj26Ap68P9lJpK0r8=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinLight-Regular.ttf"
+        },
+        {
+            "hash": "bpoOi2u+n6hRUKmEIz7OHqTsTHDfJOQnNrQCft15+iQ=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinLight-Regular.woff"
+        },
+        {
+            "hash": "Zlx18iIQKhnIUcMhnr+LJQPiglzZmoClk6ZyMSD0Gvw=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinMed-Italic.eot"
+        },
+        {
+            "hash": "BYcILOfwZp6ccRyuz4pCbxRWtEnGXQqPyHjIT33a7dE=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinMed-Italic.ttf"
+        },
+        {
+            "hash": "L8sU/6K+KTGIt8wSwOZrgnEPuZXxuHuqfABxwo9c224=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinMed-Italic.woff"
+        },
+        {
+            "hash": "FoQSXaP93HPNonxp2W4xkKUA3jxH9jG+ibeu7/ePHYc=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinMed-Regular.eot"
+        },
+        {
+            "hash": "p+rGX9Q8aUEfnJvdImnVJFvHMCMr3Hs6iRoWRze2oEQ=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinMed-Regular.ttf"
+        },
+        {
+            "hash": "UrBZ6tI/BKWyaSMLaSc+mAVGy+ohTz0pHPnhxc4i0Bg=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinMed-Regular.woff"
+        },
+        {
+            "hash": "ed/VUrUAsWeOug1tIlPfjDVRFZKUFgcUG1giL3Bvtkw=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinSemBd-Italic.eot"
+        },
+        {
+            "hash": "6aoBfRjxPv/B3K/0sE9kDUQervn+xuxnfjh5X8n0/JQ=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinSemBd-Italic.ttf"
+        },
+        {
+            "hash": "+2Y5rqwpUHeDrIFgc7NwixWfLPYYyGuHQRvLTFngwU0=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinSemBd-Italic.woff"
+        },
+        {
+            "hash": "+169AnXxqpDWNrZgQJC3jt+rt1NhYmXRhgfTY3HK+BE=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinSemBd-Regular.eot"
+        },
+        {
+            "hash": "47c1ch1cMzPOLEZLkmE+sM51AyOzEccPMkTxdecoB2M=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinSemBd-Regular.ttf"
+        },
+        {
+            "hash": "L/og2RdF899BiIuS6DQ3R0ExFubqLEVEfeHiTOA0+2U=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinSemBd-Regular.woff"
+        },
+        {
+            "hash": "aWz48vIgHeFfaE+3bnKOlFii71LtU1S/APefYcy/wOo=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinThin-Italic.eot"
+        },
+        {
+            "hash": "VSMitDmiorB/2TrwWchj5NvsOuYPJEwyC3nV513d4EA=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinThin-Italic.ttf"
+        },
+        {
+            "hash": "V/Bn+LRN37gpQRnxRTlZMiQH/sZ2i/zpWMDnKUhfe3s=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinThin-Italic.woff"
+        },
+        {
+            "hash": "CGxdSvXsqqWYpr1Hebi7zl0GTSN6ibi3DiAiwkuxuOA=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinThin-Regular.eot"
+        },
+        {
+            "hash": "0RB9TVvxS//DCBfD6k7Dfh7VewpmV0HigfaV7HWqIsE=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinThin-Regular.ttf"
+        },
+        {
+            "hash": "kbefgrUq25GNH20s0hxkVv5i+WFAYUbgFuZZ1yhyWNU=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/Fonts/LatoLatinThin-Regular.woff"
+        },
+        {
+            "hash": "t2a8P3L2Ig+uTo2XJAhw968CN3bAqKocRt7GeUjK0aY=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/LoadingBig.gif"
+        },
+        {
+            "hash": "xpIMmRwjW+jZneNO/kz1A7etoAClkZEf10cCwesi80o=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/theme.css"
+        },
+        {
+            "hash": "rVMz/59c9W6cDUFuCSuc8bIH63chfR5WlElXaShhrfQ=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/WebTreeView-Images.gif"
+        },
+        {
+            "hash": "fhOqmXNkDrxaZtv4wOmsfWPDjLPnQGCO7mIODBkOfsA=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/WebTreeView-LoadingBig.gif"
+        },
+        {
+            "hash": "jzig0/4ng5aZkGKo4YKSzddLPNa2eMcwQWte/nmaGkY=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/WebTreeView-LoadingSmall.gif"
+        },
+        {
+            "hash": "sOG+YD5GAw9ZIkPsw914ytIpJwTlgaT4k90NwcULfvU=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/WebWin-Resize.png"
+        },
+        {
+            "hash": "xpIMmRwjW+jZneNO/kz1A7etoAClkZEf10cCwesi80o=",
+            "origin": "AppHtml/CssThemes/Df_Flat_Desktop/theme.css"
+        }
+    ],
+    "upstream": "https://packages.dataflex.dev/api/v1/packages/DataFlex-dev/Web%20UI%20Flat%20Desktop%20Theme",
+    "version": 1
+}

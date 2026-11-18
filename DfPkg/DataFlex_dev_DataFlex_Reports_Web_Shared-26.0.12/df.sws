@@ -1,0 +1,32 @@
+{
+    "dependencies": [
+        "DataFlex-dev/Web UI#~1.0.0",
+        "DataFlex-dev/DataFlex Reports Windows and Web Shared#~26.0.0"
+    ],
+    "description": "DataFlex Reports Web Shared Modules",
+    "df": 26.0,
+    "package": {
+        "df-max": 26.0,
+        "df-min": 26.0,
+        "htmlIncludes": [
+            "DataFlexReports/Fonts/FontIcons.css",
+            "DataFlexReports/CssThemes/ReportViewer.css",
+            "DataFlexReports/CssThemes/PreviewerCommon.css",
+            "DataFlexReports/Previewer.js"
+        ],
+        "icon": "DR.png",
+        "install": [
+            "${AppHtml}/DataFlexReports/Fonts",
+            "${AppHtml}/DataFlexReports/CssThemes/ReportViewer.css",
+            "${AppHtml}/DataFlexReports/CssThemes/PreviewerCommon.css",
+            "${AppHtml}/DataFlexReports/Previewer.js"
+        ],
+        "license": "DocumentRef-DataFlexReports",
+        "licenseFile": "LICENSE",
+        "version": "26.0.12"
+    },
+    "paths": {
+        "fileList": "DummyFilelist.cfg"
+    },
+    "workspaceName": "DataFlex Reports Web Shared"
+}

@@ -1,0 +1,252 @@
+﻿Use cWebWidget.pkg
+Use cWebHtmlBox.pkg
+Use cWebLabel.pkg
+Use cWebImage.pkg
+Use WidgetConfigTile.wo
+Use cSampleWidget.pkg
+Use cOrderHeaderDataDictionary.dd
+Use cInventoryDataDictionary.dd
+
+Composite cWidgetTile is a cSampleWidget
+    Set piDefaultColSpan to 4
+    Set piDefaultRowSpan to 2
+    Set piColumnCount to 5
+    Set psWidgetName to "cWidgetTile"
+    Set psWidgetCaption to "Tile"
+    Set psWidgetDescription to "Display a message or statistics information"
+    Set psBackgroundColor to "#FFFFFF"
+    Set pbScroll to False
+    Set pbShowCaption to False
+    Set phoConfigWizard to oWidgetConfigTile
+    
+    Set pbFilterable to True
+    
+    { WebProperty=Server }
+    Property String psTileType "TotalRevenue"
+    
+    { WebProperty=Server }
+    Property Integer piLowInventoryAlertLevel 80
+        
+    Object oOrder_DD is a cOrderHeaderDataDictionary
+
+        Procedure OnConstrain
+            DateTime dtStart dtEnd
+            
+            WebGet pdtStartDate of (Widget(Self)) to dtStart
+            WebGet pdtEndDate of (Widget(Self)) to dtEnd
+            
+            If (dtStart <> "" and dtEnd <> "") Begin
+                Constrain OrderHeader.Order_Date Between dtStart and dtEnd    
+            End
+        End_Procedure
+    End_Object
+    
+    Object oInventory_DD is a cInventoryDataDictionary
+    End_Object
+    
+    Set Main_DD to oOrder_DD
+    Set Server to oOrder_DD
+    
+    Object oHeader is a cWebLabel
+        Set psCSSClass to "WidgetLabel_white"
+        Set psCaption to "Tile header" 
+        Set piColumnSpan to 0
+    End_Object
+
+    Object oGraphic is a cWebImage
+        Set piColumnSpan to 1
+        Set pbFillHeight to True
+        Set pePosition to wiCenter
+    End_Object
+
+    Object oContent is a cWebHtmlBox
+        Set piColumnSpan to 4
+        Set piColumnIndex to 1
+        Set pbFillHeight to True
+        Set pbScroll to False
+        Set psHtml to ""
+        Set pbServerOnClick to True
+        Set psCSSClass to "WidgetTileContent"
+        
+        Procedure OnClick String sId String sParam
+            If (sId = "login") Begin
+                Send NavigatePathBegin oLogin False 
+            End
+            Else If (sId = "logout") Begin
+                Send RequestLogout of ghoWebSessionManager
+                Send Update 
+            End
+        End_Procedure
+    End_Object
+    
+    Function EarningsData DateTime dtStart DateTime dtEnd DateTime dtCompStart DateTime dtCompEnd Number ByRef nEarningsTotal Number ByRef nDifference Returns Boolean
+        Number nCompEarningsTotal
+        
+        WebSet pdtStartDate of (Widget(Self)) to dtStart
+        WebSet pdtEndDate of (Widget(Self)) to dtEnd
+        
+        Send Rebuild_Constraints of oOrder_DD
+        Send Clear of oOrder_DD
+        Send Find of oOrder_DD FIRST_RECORD 3
+        
+        While (Found)
+            Move (OrderHeader.Order_Total + nEarningsTotal) to nEarningsTotal
+            Send Find of oOrder_DD NEXT_RECORD 3
+        Loop
+        
+        WebSet pdtStartDate of (Widget(Self)) to dtCompStart
+        WebSet pdtEndDate of (Widget(Self)) to dtCompEnd
+        
+        Send Rebuild_Constraints of oOrder_DD
+        Send Clear of oOrder_DD
+        Send Find of oOrder_DD FIRST_RECORD 3
+        
+        While (Found)
+            Move (OrderHeader.Order_Total + nCompEarningsTotal) to nCompEarningsTotal
+            Send Find of oOrder_DD NEXT_RECORD 3
+        Loop
+        
+        Move (nEarningsTotal - nCompEarningsTotal) to nDifference
+        
+        Function_Return (nDifference >= 0)
+    End_Function
+    
+    Function LowInventoryData Returns Integer
+        Integer iCount iLowInventoryAlertLevel
+        
+        WebGet piLowInventoryAlertLevel of (Widget(Self)) to iLowInventoryAlertLevel
+        
+        Send Clear of oInventory_DD
+        Send Find of oInventory_DD FIRST_RECORD 1
+
+        While (Found)
+            If (Inventory.On_Hand <= iLowInventoryAlertLevel) Begin
+                Increment iCount
+            End
+            
+            Send Find of oInventory_DD NEXT_RECORD 1
+        Loop
+
+        Function_Return iCount
+    End_Function
+    
+    Function OrderCountData DateTime dtStart DateTime dtEnd DateTime dtCompStart DateTime dtCompEnd Number ByRef nOrderCount Number ByRef nDifference Returns Boolean
+        Number nCompOrderCount
+        
+        WebSet pdtStartDate of (Widget(Self)) to dtStart
+        WebSet pdtEndDate of (Widget(Self)) to dtEnd
+        
+        Send Rebuild_Constraints of oOrder_DD
+        Send Clear of oOrder_DD
+        Send Find of oOrder_DD FIRST_RECORD 3
+        
+        While (Found)
+            Increment nOrderCount
+            Send Find of oOrder_DD NEXT_RECORD 3
+        Loop
+        
+        WebSet pdtStartDate of (Widget(Self)) to dtCompStart
+        WebSet pdtEndDate of (Widget(Self)) to dtCompEnd
+        
+        Send Rebuild_Constraints of oOrder_DD
+        Send Clear of oOrder_DD
+        Send Find of oOrder_DD FIRST_RECORD 3
+        
+        While (Found)
+            Increment nCompOrderCount
+            Send Find of oOrder_DD NEXT_RECORD 3
+        Loop
+        
+        Move (nOrderCount - nCompOrderCount) to nDifference
+        
+        Function_Return (nDifference >= 0)
+    End_Function
+    
+    Procedure Update
+        String sTileType sFilter sTotal sDifference
+        Boolean bPos
+        Number nTotal nDifference
+        DateTime dtStart dtEnd dtCompStart dtCompEnd
+        
+        WebSet pbRender of oGraphic to True
+        WebSet piColumnSpan of oContent to 3
+        WebSet piColumnIndex of oContent to 2
+        
+        WebGet psTileType to sTileType
+        Delegate Get WidgetDateFilter to sFilter
+        
+        Get StartDateByFilterType of oWidgetFilterAndDateFormatHandler sFilter to dtStart
+        Get EndDateByFilterType   of oWidgetFilterAndDateFormatHandler sFilter to dtEnd
+        Get CompareStartDateByFilterType of oWidgetFilterAndDateFormatHandler sFilter to dtCompStart
+        Get CompareEndDateByFilterType of oWidgetFilterAndDateFormatHandler sFilter to dtCompEnd
+        
+        Case Begin
+            Case (sTileType = "TotalRevenue")
+                Get EarningsData dtStart dtEnd dtCompStart dtCompEnd (&nTotal) (&nDifference) to bPos 
+                WebSet psCaption of oHeader to "Total revenue"
+                Move (FormatCurrency(nTotal, 2)) to sTotal
+                Move (FormatCurrency(nDifference, 2)) to sDifference
+                
+                If (nDifference >= 0) Begin
+                    WebSet psURL of oGraphic to "images/Arrow_Up.svg"
+                    WebSet psBackgroundColor to "#55A346"
+                    
+                    Move ("+ " + sDifference) to sDifference
+                End
+                Else Begin
+                    WebSet psURL of oGraphic to "images/Arrow_Down.svg"
+                    WebSet psBackgroundColor to "var(--df-ErrorRegular)"
+                    
+                    Move (Replace("(", sDifference, "")) to sDifference
+                    Move (Replace(")", sDifference, "")) to sDifference
+                    Move ("- " + sDifference) to sDifference
+                End
+                
+                WebSet psHtml of oContent to (SFormat("<div><h1>%1</h1><h3>%2</h3></div>", sTotal, sDifference))
+            Case Break
+                
+            Case (sTileType = "OrderTotals")
+                Get OrderCountData dtStart dtEnd dtCompStart dtCompEnd (&nTotal) (&nDifference) to bPos
+                WebSet psCaption of oHeader to "Total Orders"
+                Move (String(nTotal)) to sTotal  
+                
+                If (nDifference >= 0) Begin
+                    WebSet psURL of oGraphic to "images/Arrow_Up.svg"
+                    WebSet psBackgroundColor to "#55A346"
+                    
+                    WebSet psHtml of oContent to (SFormat("<div><h1>%1</h1><h3>+ %2</h3></div>", sTotal, nDifference))
+                End
+                Else Begin
+                    WebSet psURL of oGraphic to "images/Arrow_Down.svg"
+                    WebSet psBackgroundColor to "var(--df-ErrorRegular)"
+                    
+                    WebSet psHtml of oContent to (SFormat("<div><h1>%1</h1><h3>%2</h3></div>", sTotal, nDifference))
+                End                
+            Case Break
+            
+            Case (sTileType = "LowInventory")
+                Get LowInventoryData to nTotal
+                WebSet psCaption of oHeader to "Low Inventory Count"
+                Move (String(nTotal)) to sTotal
+                
+                If (nTotal > 0) Begin
+                    WebSet psURL of oGraphic to "images/Warning.svg"
+                    WebSet psBackgroundColor to "var(--df-WarningRegular)"
+                End 
+                Else Begin
+                    WebSet psURL of oGraphic to "images/Check.svg"
+                    WebSet psBackgroundColor to "#55A346"
+                End
+                
+                WebSet psHtml of oContent to (SFormat("<div><h1>%1</h1></div>", sTotal))
+            Case Break
+        Case End        
+    End_Procedure
+    
+    Procedure OnGetConfigurableProps tWidgetConfigProp[]  ByRef aConfigurableProps
+        Forward Send OnGetConfigurableProps (&aConfigurableProps)
+        
+        Get CreateConfigurableProp Self (RefFunc(psTileType)) to aConfigurableProps[-1]
+        Get CreateConfigurableProp Self (RefFunc(piLowInventoryAlertLevel)) to aConfigurableProps[-1]
+    End_Procedure
+End_Composite

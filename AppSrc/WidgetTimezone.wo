@@ -1,0 +1,236 @@
+﻿Use cWebWidget.pkg
+Use cWebTimer.pkg
+Use cWebLabel.pkg
+Use WidgetConfigTimezone.wo
+Use SystemTimeToTzSpecificLocalTimeEx.h.pkg
+Use cSampleWidget.pkg
+
+Struct tTimezoneDisplay
+    String sTzDate
+    String sTzName
+    String sTzTime
+End_Struct
+
+Composite cWidgetTimezone is a cSampleWidget
+    Set piDefaultColSpan to 4
+    Set piDefaultRowSpan to 2
+    
+    Set psWidgetName to "cWidgeTimezone"
+    Set psWidgetCaption to "TimeZone Display"
+    Set psWidgetDescription to "Displays Date & Time in Selected TimeZone"
+    Set pbShowCaption to False
+    Set phoConfigWizard to oWidgetConfigTimezone
+    
+    { WebProperty=Server }
+    Property String psTimezoneKey
+    
+    { WebProperty=Server }
+    Property Boolean pbFirstTick True
+    
+    { WebProperty=Server }
+    Property Boolean pbUse12Hour False
+    
+    Object oDateTimeHandler is a cDateTimeHandler
+    End_Object
+    
+    Object oTimeZone is a cWebLabel
+        Set psCSSClass to "SubTitle"
+        Set psCaption to "Timezone Name"
+        Set peAlign to alignCenter
+        Set piColumnSpan to 0
+    End_Object
+    
+    Object oTimeDisplay is a cWebLabel
+        Set psCSSClass to "Title"
+        Set psCaption to "00:00:00"
+        Set peAlign to alignCenter
+        Set piColumnSpan to 12
+    End_Object
+    
+    Object oDateDisplay is a cWebLabel
+        Set psCSSClass to "SubTitle"
+        Set psCaption to "00-00-00"
+        Set peAlign to alignCenter
+        Set piColumnSpan to 12
+    End_Object
+    
+    Object oTimer is a cWebTimer
+        Set piInterval to 20000
+        
+        Procedure OnTimer
+            Boolean bFirstTick
+        
+            WebGet pbFirstTick of (Widget(Self)) to bFirstTick
+        
+            If (bFirstTick) Begin
+                WebSet piInterval of oTimer to 60000
+                WebSet pbFirstTick of (Widget(Self)) to False
+            End
+        
+            Send OnWidgetPropsChanged
+        End_Procedure
+    End_Object
+    
+    Procedure OnGetConfigurableProps tWidgetConfigProp[] ByRef aConfigurableProps
+        Forward Send OnGetConfigurableProps (&aConfigurableProps)
+        
+        Get CreateConfigurableProp Self (RefFunc(psTimezoneKey)) to aConfigurableProps[-1]
+        Get CreateConfigurableProp Self (RefFunc(pbUse12Hour)) to aConfigurableProps[-1]
+    End_Procedure
+   
+    Procedure OnInitializeWidget
+        Integer iCurrentSecond
+        DateTime utcTime
+
+        WebSet pbFirstTick to True
+        Get CurrentUTCDateTime of (oDateTimeHandler(Widget(Self))) to utcTime
+        Move (DateGetSecond(utcTime)) to iCurrentSecond
+        WebSet piInterval of oTimer to ((60 - iCurrentSecond) * 1000)
+       
+        Send OnWidgetPropsChanged
+        Send Start of oTimer
+    End_Procedure
+    
+    Procedure OnWidgetPropsChanged
+        Boolean bFromWizard bEditMode
+        Handle hoInternal
+        
+        tTimezoneDisplay TimezoneDisplay
+        String sTzName
+       
+        WebGet psTimezoneKey to sTzName
+        
+        If (sTzName = "") Begin
+            Move "W. Europe Standard Time" to sTzName
+        End
+        
+        Get TimezoneDisplayInfo sTzName to TimezoneDisplay   
+        
+        WebSet psCaption of oTimeZone to TimezoneDisplay.sTzName
+        WebSet psCaption of oTimeDisplay to TimezoneDisplay.sTzTime
+        WebSet psCaption of oDateDisplay to TimezoneDisplay.sTzDate
+    End_Procedure
+    
+    Function DynamicTimeZoneInformationByName String sTimezoneName Returns tDynamicTimeZoneInformation
+        tDynamicTimeZoneInformation tzDynamicInfo
+        Integer iIndex iRetval
+        String sKeyName
+        
+        Move 0 to iIndex 
+        
+        While (iIndex < ERROR_NO_MORE_ITEMS)
+            Move (WinAPI_EnumDynamicTimeZoneInformation (iIndex, AddressOf (tzDynamicInfo))) to iRetval
+            
+            If (iRetval = ERROR_SUCCESS) Begin
+                Move (PointerToWString (AddressOf (tzDynamicInfo.TimeZoneKeyName))) to sKeyName
+    
+                If (sKeyName = sTimezoneName) Begin
+                    Function_Return tzDynamicInfo
+                End                
+            End
+            
+            Increment iIndex
+        Loop
+    End_Function
+    
+    Function UTCToLocalTime tDynamicTimeZoneInformation tzDynamicInfo DateTime utcTime Returns DateTime
+        tWinSystemTime utcSys localSys
+        DateTime dtLocal
+        Boolean bOk
+        Integer iSeconds
+        
+        Get DateTimeToSystemTime of oDateTimeHandler utcTime to utcSys
+        Move (WinAPI_SystemTimeToTzSpecificLocalTimeEx(AddressOf(tzDynamicInfo), AddressOf(utcSys), AddressOf(localSys))) to bOk
+        If (bOk) Begin
+            Get SystemTimeToDateTime of oDateTimeHandler localSys to dtLocal
+            
+            Function_Return dtLocal
+        End
+        
+        Function_Return utcTime //fallback return
+    End_Function
+    
+    Function TimezoneDisplayInfo String sTimezone Returns tTimezoneDisplay
+        tDynamicTimeZoneInformation tzDynamicInfo
+        tTimezoneDisplay TimezoneDisplay
+        DateTime utcTime utcLocal
+        String sKeyName sDay sMonth sFormattedDate sFormattedTime sTimeSuffix sDisplayHour
+        Integer iHour iMinute iDay iMonth iCurrentSecond
+        Boolean bFirstTick bUse12Hour
+        
+        Get DynamicTimeZoneInformationByName sTimezone to tzDynamicInfo
+        Get CurrentUTCDateTime of oDateTimeHandler to utcTime
+        
+        Move (PointerToWString (AddressOf (tzDynamicInfo.TimeZoneKeyName))) to sKeyName
+        
+        //Time Formatting
+        Get UTCToLocalTime tzDynamicInfo utcTime to utcLocal
+        WebGet pbUse12Hour to bUse12Hour
+
+        Move (DateGetHour(utcLocal)) to iHour
+        Move (DateGetMinute(utcLocal)) to iMinute
+        
+        If (bUse12Hour) Begin
+            If (iHour = 0) Begin
+                Move 12 to iHour
+                Move "AM" to sTimeSuffix
+            End
+            Else If (iHour < 12) Begin
+                Move iHour to iHour
+                Move "AM" to sTimeSuffix
+            End
+            Else If (iHour = 12) Begin
+                Move 12 to iHour
+                Move "PM" to sTimeSuffix
+            End
+            Else Begin
+                Move (iHour - 12) to iHour
+                Move "PM" to sTimeSuffix
+            End
+            
+            // Zero-padding hours + minutes
+            If (iHour < 10) Begin
+                Move (SFormat("0%1", iHour)) to sDisplayHour
+            End
+            Else Begin
+                Move iHour to sDisplayHour
+            End
+            
+            If (iMinute < 10) Begin
+                Move (SFormat("%1:0%2 %3", sDisplayHour, iMinute, sTimeSuffix)) to sFormattedTime
+            End
+            Else Begin
+                Move (SFormat("%1:%2 %3", sDisplayHour, iMinute, sTimeSuffix)) to sFormattedTime
+            End
+        End
+        Else Begin
+            If (iHour < 10) Begin
+                Move (SFormat("0%1", iHour)) to sDisplayHour
+            End
+            Else Begin
+                Move iHour to sDisplayHour
+            End
+            
+            If (iMinute < 10) Begin
+                Move (SFormat("%1:0%2", sDisplayHour, iMinute)) to sFormattedTime
+            End
+            Else Begin
+                Move (SFormat("%1:%2", sDisplayHour, iMinute)) to sFormattedTime
+            End
+        End
+ 
+        Move (DateGetDayOfWeek(utcLocal)) to iDay
+        Get DateGetWeekDayName of oWidgetFilterAndDateFormatHandler iDay to sDay
+        
+        Move (DateGetMonth(utcLocal)) to iMonth
+        Get DateGetMonthShortName of oWidgetFilterAndDateFormatHandler iMonth to sMonth
+        
+        Move (SFormat("%1, %2 %3 %4", sDay, (DateGetDay(utcLocal)), sMonth, (DateGetYear(utcLocal)))) to sFormattedDate
+        
+        Move sFormattedDate to TimezoneDisplay.sTzDate
+        Move sFormattedTime to TimezoneDisplay.sTzTime
+        Move sTimezone to TimezoneDisplay.sTzName
+        
+        Function_Return TimezoneDisplay
+    End_Function
+End_Composite

@@ -1,0 +1,19 @@
+{
+    "dependencies": [
+        "DataFlex-dev/Web UI Flat Desktop Theme#1.0.5",
+        "DataFlex-dev/Web UI Flat Touch Theme#1.0.5",
+        "DataFlex-dev/Web UI Material Theme#1.0.3",
+        "DataFlex-dev/Web UI Server#1.0.56",
+        "DataFlex-dev/DateTime#1.0.1",
+        "DataFlex-dev/Charts#1.0.0",
+        "DataFlex-dev/DataFlex Reports Web Demo#26.0.1",
+        "DataFlex-dev/DataFlex Reports Material Theme#26.0.2",
+        "DataFlex-dev/DataFlex Reports Flat Touch Theme#26.0.2",
+        "DataFlex-dev/DataFlex Reports Flat Desktop Theme#26.0.3"
+    ],
+    "df": 26.0,
+    "projects": [
+        "WebApp.src"
+    ]
+}
+

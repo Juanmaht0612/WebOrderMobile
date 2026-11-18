@@ -1,0 +1,359 @@
+body.WidgetsDashboard {
+    --Widgets-ErrorText: var(--df-ErrorRegular);
+}
+
+body.WidgetsDashboard.df-Dark {
+    --Widgets-ErrorText: #ff5a5f;
+}
+
+/*
+
+    Dashboard Custom TabContainer header
+
+*/
+
+.WidgetsDashboard .TabButton a {
+    display: block;
+    color: #348EE6 !important;
+    text-decoration: none;    
+    height: 100%;
+}
+
+.WidgetsDashboard .TabButton .WebCon_Inner,
+.WidgetsDashboard .TabButton a div {
+    height: 100%;    
+    margin: 0;
+    text-align: center;
+}
+
+.WidgetsDashboard .TabButton.Selected {
+    border-bottom: 3px solid #348EE6;
+    color: #348EE6;
+    font-weight: 500;
+}
+
+.WidgetsDashboard .TabButton:hover {
+    background-color: rgba(0,0,0, 0.01);     
+}
+
+.WidgetsDashboard .WebHorizontalLine.TabLine {
+    position: absolute;
+    top: 37px;    
+}
+
+.WidgetsDashboard .WebHorizontalLine>div.WebCon_Inner>div {
+    padding: 0;    
+}
+
+.WidgetsDashboard .WebHorizontalLine hr {
+    background: var(--df-Grayscale3);
+}
+
+.WidgetsDashboard .FilterDetail {
+    font-size: 12px;
+    opacity: 80%;
+    text-transform: uppercase;
+}
+
+.WidgetsDashboard>div.WebContainer {
+    padding: 20px 10px 0px 10px !important;    
+}
+
+
+/*
+
+    Widgets general
+        
+*/
+
+.WebWidget .WidgetLabel {
+    font-weight: bold;    
+}
+
+.WebWidget .WebLabel.WidgetLabel_white .WebLabel_content{
+    color: #ffffff;
+    font-weight: bold;
+}
+
+
+[data-dfobj^="oWidgetConfig"] .WebRadio.Web_Enabled.WebCon_Focus .WebR_Fake:after {
+    background: unset !important;
+}
+
+[data-dfobj^="oWidgetConfig"] .WebRadio.Web_Enabled.WebCon_Focus .WebR_Fake:before {
+    box-shadow: none;
+}
+
+/* Prevent flipswitch dissapearing in background when not focused/selected */
+body.WidgetsDashboard.df-Dark .WebCheckbox.FlipSwitch .WebCB_Fake:after {
+    background-color: var(--df-Grayscale4);
+}
+
+body.WidgetsDashboard.df-Dark .WebCheckbox.FlipSwitch input:checked+.WebCB_Fake:after {
+    background-color: var(--df-MainLight);
+}
+
+body.WidgetsDashboard.df-Dark .WebCheckbox.FlipSwitch .WebCB_Fake:before {
+    background-color: var(--df-Grayscale2);
+}
+
+
+/*overwrite from system.css - line 3183 */
+.WebWidgetPalette .WebList_Row::before {
+    mask-image: url("../Images/ItemSelectDots.svg");
+    -webkit-mask-image: url("../Images/ItemSelectDots.svg");
+
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
+
+    mask-size: 25px 50px;
+    -webkit-mask-size: 25px 50px;
+
+    mask-position: center;
+    -webkit-mask-position: center;
+
+    color: var(--df-MainRegular);
+    
+    left: 3px;
+    background-image: unset;
+    background-repeat: unset;
+    background-size: unset;
+    background-position: unset;
+}
+
+
+/*
+
+    Tile Widget
+
+*/
+
+.WebWidget .WidgetTileContent h1 {
+    font-size: 24px;
+    color: #ffffff;
+}
+
+.WebWidget .WidgetTileContent h3 {
+    font-size: 16px;
+    color: #ffffff;
+}
+
+
+/*
+
+    Timezone Widget
+
+*/
+
+.WebWidget .Title {
+    font-size: 24px;    
+}
+
+.WebWidget .SubTitle {
+    font-size: 16px;    
+}
+
+
+/*
+
+    List Widget
+
+*/
+
+.WebWidget .WebList_Focus {
+    box-shadow: none;    
+}
+
+.WebWidget .WebList_Body table:last-child {
+    border: none;    
+} 
+
+.WebWidget .WebList .WebList_Body .WebList_Row td {
+    height: 42px;    
+}
+
+.WebWidget .WebList .WebList_Body .WebList_Row td.WidgetListDifferenceVal {
+    color: #55A346;
+}
+
+.WebWidget .WebList .WebList_Body .WebList_Row td.WidgetListDifferenceVal[title^="-"] {
+    color: var(--Widgets-ErrorText);
+}
+
+.WebWidget .WebList_Row {
+    cursor: pointer;    
+}
+
+.WebList .WebList_Body .WebList_Row td.dfData_Text.LowStock {
+    color: var(--df-WarningRegular);
+}
+
+
+/*
+
+    Button Widget
+
+*/
+
+.ButtonWidget .WebCon_Sizer,
+.ButtonWidget .WebCon_Content {
+    height: 100% !important;   
+} 
+
+.ButtonWidget .WidgetActionButton,
+.ButtonWidget .WidgetActionButton .WebCon_Inner,
+.ButtonWidget .WidgetActionButton .WebCon_Inner div,
+.ButtonWidget .WidgetActionButton button {
+    height: 100% !important;
+}
+.ButtonWidget .WebCon_Content {
+    padding: 0 !important;    
+}
+
+.ButtonWidget .WebButton .WebCon_Inner.WebCon_FillRow {
+    margin: 0;
+}
+
+.WidgetsDashboard .WidgetInfoIcon .WebHtml_Wrp {
+    display: flex;
+    justify-content: center;
+}
+
+
+/* Tooltip box */
+.WidgetInfoIcon .WebHtml_Wrp{
+    overflow: visible !important; /* prevents tooltip causing scrollbars */
+}
+
+.WidgetInfoIcon .infoIcon {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    border-radius: 50%;
+    background: #2f6fed;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.WidgetInfoIcon .infoIcon::after {
+    content: attr(data-tooltip);
+    position: absolute;
+
+    /* place to the LEFT of the icon */
+    top: 50%;
+    right: calc(100% + 10px);
+    transform: translateY(-50%);
+
+    background: #333;
+    color: #fff;
+    padding: 8px 10px;
+    border-radius: 4px;
+
+    /* Wrapping / 2 lines (or more) */
+    white-space: normal;           /* control width so it wraps */
+    min-width: 300px;
+    line-height: 1.2;
+    word-break: break-word;     /* break long words if needed */
+    overflow-wrap: anywhere;    /* extra safety for long tokens */
+
+    font-weight: 300;
+    font-size: 13px;
+
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.1s;
+
+    z-index: 9999; /* helps vs siblings, not vs overflow clipping */
+}
+
+.df-Dark .WidgetInfoIcon .infoIcon::after {
+    background: #707579;
+    color: #fff;
+    border: 1px solid #fff;
+}
+
+/* Show tooltip on hover OR click/focus */
+.WidgetInfoIcon .infoIcon:hover::after,
+.WidgetInfoIcon .infoIcon:focus::after {
+    opacity: 1;
+}
+
+.WidgetsDashboard .WebCon_WebWidget_Edit_Btns_Wrp,
+.WidgetsDashboard .WebCon_WebWidget_Bottom_Btns_Wrp {
+    z-index: 10;
+}
+
+
+/*
+
+    Button svg icons
+
+*/
+
+.EditDashboardBtn button::before,
+.CancelDashboardBtn button::before,
+.ResetDashboardBtn button::before,
+.SaveDashboardBtn button::before {
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+
+    background-color: currentColor;
+}
+
+.EditDashboardBtn button::before {
+    mask-image: url("../Images/Edit.svg");
+    -webkit-mask-image: url("../Images/Edit.svg");
+}
+
+.CancelDashboardBtn button::before {
+    mask-image: url("../Images/Cancel.svg");
+    -webkit-mask-image: url("../Images/Cancel.svg");
+    width: 12px;
+    height: 12px;
+    margin-top: 4px;
+}
+
+.ResetDashboardBtn button::before {
+    mask-image: url("../Images/Reset.svg");
+    -webkit-mask-image: url("../Images/Reset.svg");
+    margin-top: 2px;
+}
+
+.ResetDashboardBtn button {
+    color: #989898;
+    border: none;    
+    box-shadow: unset;
+
+}
+
+.ResetDashboardBtn button:hover,
+.ResetDashboardBtn button:focus {
+    color: #6e6e6e !important;
+    background-color: unset;
+}
+
+
+.SaveDashboardBtn button::before {
+    mask-image: url("../Images/Save.svg");
+    -webkit-mask-image: url("../Images/Save.svg");
+    margin-top: 2px;
+}
+
+.WebCon_WebWidget_Drag_Indicator {
+    visibility: hidden;    
+}

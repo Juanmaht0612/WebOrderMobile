@@ -1,0 +1,133 @@
+[Workspace]
+CurrentProject=WebApp.src
+Location=C:\Tarea 16\WebOrderMobile\IdeSrc\juanm_Studio.dsk
+CreateNew=71
+[TabWindows]
+GroupCount=1
+HorizontalGroups=1
+[TabGroup0]
+GroupSize=40
+SelectedTab=0
+[Window0]
+Filename=C:\Tarea 16\WebOrderMobile\AppSrc\SelectLiga.wo
+ViewType=102
+Top=21
+Left=0
+Bottom=1078
+Right=2068
+TabIndex=1
+TabGroup=0
+[Window1]
+Filename=C:\Tarea 16\WebOrderMobile\AppSrc\SelectEquipo.wo
+ViewType=102
+Top=21
+Left=0
+Bottom=1078
+Right=2068
+TabIndex=2
+TabGroup=0
+[Window2]
+Filename=C:\Tarea 16\WebOrderMobile\AppSrc\ZoomJugador.wo
+ViewType=102
+Top=21
+Left=0
+Bottom=1078
+Right=2068
+TabIndex=3
+TabGroup=0
+[Window3]
+Filename=C:\Tarea 16\WebOrderMobile\AppSrc\ZoomEntrenador.wo
+ViewType=102
+Top=21
+Left=0
+Bottom=1078
+Right=2068
+TabIndex=4
+TabGroup=0
+[Window4]
+Filename=C:\Tarea 16\WebOrderMobile\AppSrc\ZoomPosicion.wo
+ViewType=102
+Top=21
+Left=0
+Bottom=1078
+Right=2068
+TabIndex=5
+TabGroup=0
+[Window5]
+Filename=C:\Tarea 16\WebOrderMobile\AppSrc\ZoomJugadorPosicion.wo
+ViewType=102
+Top=21
+Left=0
+Bottom=1078
+Right=2068
+TabIndex=6
+TabGroup=0
+[Window6]
+Filename=C:\Tarea 16\WebOrderMobile\AppSrc\WebApp.src
+ViewType=1
+Top=21
+Left=0
+Bottom=1078
+Right=2068
+CursorLine=16
+CursorColumn=10
+TabIndex=7
+TabGroup=0
+[Window7]
+Filename=C:\Tarea 16\WebOrderMobile\AppSrc\DemoCheckboxRadio.wo
+ViewType=102
+Top=21
+Left=0
+Bottom=1078
+Right=2068
+TabIndex=8
+TabGroup=0
+[Window8]
+Filename=C:\Tarea 16\WebOrderMobile\AppSrc\DemoCSSClasses.wo
+ViewType=102
+Top=21
+Left=0
+Bottom=1078
+Right=2068
+TabIndex=9
+TabGroup=0
+[Window9]
+Filename=C:\Tarea 16\WebOrderMobile\AppSrc\SelectLiga.wo
+ViewType=1
+Top=21
+Left=0
+Bottom=1078
+Right=2068
+CursorLine=57
+CursorColumn=30
+TabIndex=10
+TabGroup=0
+[Window10]
+Filename=C:\Program Files\DataFlex 26.0\Pkg\cWebAppBase_Mixin.pkg
+ViewType=1
+Top=21
+Left=0
+Bottom=1078
+Right=2068
+CursorLine=292
+CursorColumn=0
+TabIndex=11
+TabGroup=0
+[Window11]
+Filename=Package Manager
+ViewType=104
+Top=21
+Left=0
+Bottom=1078
+Right=2068
+TabIndex=12
+TabGroup=0
+[Window12]
+Filename=Workspace Dashboard
+ViewType=101
+Top=21
+Left=0
+Bottom=1078
+Right=2068
+TabIndex=0
+TabGroup=0

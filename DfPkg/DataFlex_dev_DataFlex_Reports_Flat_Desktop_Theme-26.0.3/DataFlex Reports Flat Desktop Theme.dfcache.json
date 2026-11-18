@@ -1,0 +1,22 @@
+{
+    "install": [
+        {
+            "hash": "QITu/B0zShOH9LuGGRDFHemymB1J18vW2uXLYY3vn08=",
+            "origin": "AppHtml/DataFlexReports/CssThemes/Df_Flat_Desktop/Integration.css"
+        },
+        {
+            "hash": "dOvVlhZHNR27VE7dOtXwnkvc3CROmrvjNem/+21kGS0=",
+            "origin": "AppHtml/DataFlexReports/CssThemes/Df_Flat_Desktop/Previewer.css"
+        },
+        {
+            "hash": "dOvVlhZHNR27VE7dOtXwnkvc3CROmrvjNem/+21kGS0=",
+            "origin": "AppHtml/DataFlexReports/CssThemes/Df_Flat_Desktop/Previewer.css"
+        },
+        {
+            "hash": "QITu/B0zShOH9LuGGRDFHemymB1J18vW2uXLYY3vn08=",
+            "origin": "AppHtml/DataFlexReports/CssThemes/Df_Flat_Desktop/Integration.css"
+        }
+    ],
+    "upstream": "https://packages.dataflex.dev/api/v1/packages/DataFlex-dev/DataFlex%20Reports%20Flat%20Desktop%20Theme",
+    "version": 1
+}

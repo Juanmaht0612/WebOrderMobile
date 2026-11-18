@@ -1,0 +1,233 @@
+﻿Use cWebWidget.pkg
+Use cWebCombo.pkg
+Use Charts\cChart.pkg
+Use cSampleWidget.pkg
+Use cOrderHeaderDataDictionary.dd
+
+Composite cWidgetChartInternalFilter is a cSampleWidget
+    Set piDefaultColSpan to 8
+    Set piDefaultRowSpan to 5
+    Set psWidgetName to "cWidgetChartInternalFilter"
+    Set psWidgetCaption to "Chart"
+    Set psWidgetDescription to "Configurable chart"
+    Set piColumnCount to 12
+    Set pbShowCaption to False
+    Set pbScroll to False
+    
+    { WebProperty=Server }
+    Property String psFilter "year"
+   
+    Object oOrder_DD is a cOrderHeaderDataDictionary
+
+        Procedure OnConstrain
+            DateTime dtStart dtEnd
+            
+            WebGet pdtStartDate of (Widget(Self)) to dtStart
+            WebGet pdtEndDate of (Widget(Self)) to dtEnd
+            
+            If (dtStart <> "" and dtEnd <> "") Begin
+                Constrain OrderHeader.Order_Date Between dtStart and dtEnd    
+            End
+        End_Procedure
+    End_Object
+    
+    Set Main_DD to oOrder_DD
+    Set Server to oOrder_DD
+    
+    Object oInternalFilter is a cWebCombo
+        Set piColumnSpan to 3
+        Set piColumnIndex to 9
+        Set pbShowLabel to False
+        Set pbServerOnChange to True
+       
+        Procedure OnFill
+            
+            Send AddComboItem "year" "This Year"
+            Send AddComboItem "month" "This Month"
+            Send AddComboItem "week" "This Week"
+            Send AddComboItem "last_year" "Last Year"
+            Send AddComboItem "last_month" "Last Month"
+            Send AddComboItem "last_week" "Last Week"  
+            
+            //Set default global filter value for widgets to use
+            WebSet psFilter of (Widget(Self)) to "year"  
+        End_Procedure
+    
+        Procedure OnChange String sNewValue String sOldValue
+            WebSet psFilter of (Widget(Self)) to sNewValue
+            
+            Send Update           
+        End_Procedure
+    End_Object
+
+    Object oTotalRevenue is a cChart
+        Set psChartingLibrary to "Chartjs"
+        Set psChartType to "line"
+        Set psTitle to "Total revenue"
+        Set psChartBackgroundColor to "white"
+        Set pbLegendEnabled to True
+        Set piColumnSpan to 12
+        Set pbFillHeight to True
+        Set psLegendAlignment to "top"
+        Set psYAxisLabel to (Default_Currency_Symbol())
+        Set pbShowLabel to False
+    End_Object
+
+    Function CreateFilledArray Integer iCount Returns Number[]
+        tPointData[] apFilled
+        
+        Move (ResizeArray(apFilled, iCount)) to apFilled
+        
+        Function_Return apFilled
+    End_Function
+
+    Function GetTargetIndex String sType Date dOrderDate Returns Integer
+        Integer iIndex
+    
+        If (sType = "months") Begin
+            Move (DateGetMonth(dOrderDate)) to iIndex
+        End
+        Else If (sType = "days") Begin
+            Move (DateGetDay(dOrderDate)) to iIndex
+        End
+        Else If (sType = "week") Begin
+            Move (DateGetDayOfWeekISO(dOrderDate)) to iIndex
+        End
+    
+        Decrement iIndex
+    
+        Function_Return iIndex
+    End_Function
+    
+    Function GetLineLabel String sType DateTime dtStart Returns String
+        String sLabel sMonthName
+    
+        If (sType = "months") Begin
+            Move (DateGetYear(dtStart)) to sLabel
+        End
+        Else If (sType = "days") Begin
+            Get DateGetMonthShortName of oWidgetFilterAndDateFormatHandler (DateGetMonth(dtStart)) to sMonthName
+            Move (SFormat("%1 %2", sMonthName, (DateGetYear(dtStart)))) to sLabel
+        End
+        Else If (sType = "week") Begin
+            Move (SFormat("Week %1, %2", (DateGetWeekOfYearISO(dtStart)), (DateGetYear(dtStart)))) to sLabel
+        End
+    
+        Function_Return sLabel
+    End_Function
+
+    Procedure Update
+        String      sFilter sType sFormattedValue sMonthName sLabels
+        Integer     iTargetIndex iPrevTargetIndex iSize i
+        DateTime    dtStart dtEnd dtCompStart dtCompEnd
+        String[]    aLabels
+        tChartData[] ChartData
+        tChartData   ChartItem
+        tPointData[] DataPointCurrent
+        tPointData[] DataPointComp
+        tPointData   Point EmptyPoint
+        Number       nVal
+    
+        WebGet psFilter to sFilter
+    
+        Get StartDateByFilterType            of oWidgetFilterAndDateFormatHandler sFilter to dtStart
+        Get EndDateByFilterType              of oWidgetFilterAndDateFormatHandler sFilter to dtEnd
+        Get CompareStartDateByFilterType     of oWidgetFilterAndDateFormatHandler sFilter to dtCompStart
+        Get FullCompareEndDateByFilterType   of oWidgetFilterAndDateFormatHandler sFilter to dtCompEnd
+    
+        // Prefill labels + datapoints
+        Case Begin
+            Case (sFilter = "year")
+            Case (sFilter = "last_year")
+                Move (StrSplitToArray("Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec", ",")) to aLabels
+                Move (CreateFilledarray(Self, 12)) to DataPointCurrent
+                Move DataPointCurrent to DataPointComp
+                Move "months" to sType
+                Case Break
+    
+            Case (sFilter = "month")
+            Case (sFilter = "last_month")
+                Move (StrSplitToArray("1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31", ",")) to aLabels
+                Move (CreateFilledArray(Self, 31)) to DataPointCurrent
+                Move DataPointCurrent to DataPointComp
+                Move "days" to sType
+                Case Break
+    
+            Case (sFilter = "week")
+            Case (sFilter = "last_week")
+                Move (StrSplitToArray("Mon,Tue,Wed,Thu,Fri,Sat,Sun", ",")) to aLabels
+                Move (CreateFilledArray(Self, 7)) to DataPointCurrent
+                Move DataPointCurrent to DataPointComp
+                Move "week" to sType
+                Case Break
+        Case End
+    
+        // DATASET 1 (current period)
+        WebSet pdtStartDate of (Widget(Self)) to dtStart
+        WebSet pdtEndDate of (Widget(Self)) to dtEnd
+        Move -1 to iPrevTargetIndex
+        
+        Send Rebuild_Constraints of oOrder_DD
+        Send Clear of oOrder_DD
+        Send Find of oOrder_DD FIRST_RECORD 3
+    
+        While (Found)
+            Move (GetTargetIndex(Self, sType, OrderHeader.Order_Date)) to iTargetIndex
+            If (iTargetIndex <> iPrevTargetIndex) Begin
+                Move EmptyPoint to Point
+                Move iTargetIndex to iPrevTargetIndex
+            End
+            
+            Move (Point.y + OrderHeader.Order_Total) to Point.y
+            Move Point.y to DataPointCurrent[iTargetIndex].y
+            Move (FormatCurrency(DataPointCurrent[iTargetIndex].y, 2)) to DataPointCurrent[iTargetIndex].sTooltip
+    
+            Send Find of oOrder_DD NEXT_RECORD 3
+        Loop
+    
+        // Line 1 (current period)
+        Move (GetLineLabel(Self, sType, dtStart)) to ChartItem.sLabel
+        Move "#0072C6" to ChartItem.sSeriesColor
+        Move "line"  to ChartItem.sType
+        Move 2       to ChartItem.nLineThickness
+        Move ChartItem to ChartData[0]
+        Move DataPointCurrent to ChartData[0].dataPoints
+        
+        // DATASET 2 (comparison period)
+        WebSet pdtStartDate of (Widget(Self)) to dtCompStart
+        WebSet pdtEndDate of (Widget(Self)) to dtCompEnd
+        Move -1 to iPrevTargetIndex
+        
+        Send Rebuild_Constraints of oOrder_DD
+        Send Clear of oOrder_DD
+        Send Find of oOrder_DD FIRST_RECORD 3
+    
+        While (Found)
+            Move (GetTargetIndex(Self, sType, OrderHeader.Order_Date)) to iTargetIndex
+            If (iTargetIndex <> iPrevTargetIndex) Begin
+                Move EmptyPoint to Point
+                Move iTargetIndex to iPrevTargetIndex
+            End 
+            
+            Move (Point.y + OrderHeader.Order_Total) to Point.y 
+            Move Point.y to DataPointComp[iTargetIndex].y            
+            Move (FormatCurrency(DataPointComp[iTargetIndex].y, 2)) to DataPointComp[iTargetIndex].sTooltip
+    
+            Send Find of oOrder_DD NEXT_RECORD 3
+        Loop
+
+        // Line 2 (comparison period)
+        Move (GetLineLabel(Self, sType, dtCompStart)) to ChartItem.sLabel
+        Move "#D9D9D9" to ChartItem.sSeriesColor
+        Move "line"  to ChartItem.sType
+        Move 2       to ChartItem.nLineThickness
+        Move ChartItem to ChartData[1]
+        Move DataPointComp to ChartData[1].dataPoints
+    
+        // Output
+        Move (StrJoinFromArray(aLabels, ", ")) to sLabels
+        WebSet psXAxisLabels of oTotalRevenue to sLabels
+    
+        Send CreateChart of oTotalRevenue ChartData
+    End_Procedure
+End_Composite

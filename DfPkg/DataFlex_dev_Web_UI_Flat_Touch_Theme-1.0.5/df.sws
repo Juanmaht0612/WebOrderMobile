@@ -1,0 +1,25 @@
+{
+    "dependencies": [
+        "DataFlex-dev/Web UI#~1.0.42"
+    ],
+    "description": "Flat touch theme for Web UI.",
+    "df": 26.0,
+    "package": {
+        "df-max": 26.0,
+        "df-min": 26.0,
+        "htmlIncludes": [
+            "CssThemes/Df_Flat_Touch/theme.css"
+        ],
+        "icon": "Web UI Theme.svg",
+        "install": [
+            "${AppHtml}/CssThemes/Df_Flat_Touch"
+        ],
+        "license": "DocumentRef-DataFlex",
+        "licenseFile": "LICENSE",
+        "version": "1.0.5"
+    },
+    "paths": {
+        "fileList": "DummyFilelist.cfg"
+    },
+    "workspaceName": "Web UI Flat Touch Theme"
+}

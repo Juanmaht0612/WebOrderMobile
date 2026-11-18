@@ -1,0 +1,20 @@
+{
+    "dependencies": [
+        "DataFlex-dev/DataFlex Reports Demo Core#~26.0.0",
+        "DataFlex-dev/DataFlex Reports Web Shared#~26.0.0"
+    ],
+    "description": "DataFlex Reports Web Demo Modules",
+    "df": 26.0,
+    "package": {
+        "df-max": 26.0,
+        "df-min": 26.0,
+        "icon": "DR.png",
+        "license": "DocumentRef-DataFlexReports",
+        "licenseFile": "LICENSE",
+        "version": "26.0.1"
+    },
+    "paths": {
+        "fileList": "DummyFilelist.cfg"
+    },
+    "workspaceName": "DataFlex Reports Web Demo"
+}

@@ -1,0 +1,14 @@
+{
+    "dependencies": [
+        "DataFlex-dev/Conversions#1.0.0"
+    ],
+    "description": "The DataFlex DataTime library.",
+    "df": 26.0,
+    "package": {
+        "df-max": 26.0,
+        "df-min": 26.0,
+        "icon": "Icon.png",
+        "license": "BSD-3-Clause",
+        "version": "1.0.1"
+    }
+}

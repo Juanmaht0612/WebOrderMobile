@@ -1,0 +1,16 @@
+{
+    "description": "DataFlex Reports Windows and Web Shared Modules",
+    "df": 26.0,
+    "package": {
+        "df-max": 26.0,
+        "df-min": 26.0,
+        "icon": "DR.png",
+        "license": "DocumentRef-DataFlexReports",
+        "licenseFile": "LICENSE",
+        "version": "26.0.7"
+    },
+    "paths": {
+        "fileList": "DummyFilelist.cfg"
+    },
+    "workspaceName": "DataFlex Reports Windows and Web Shared"
+}

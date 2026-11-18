@@ -1,0 +1,626 @@
+﻿Use cWebView.pkg
+Use cWebPanel.pkg
+Use cWebForm.pkg 
+Use cWebWidgetContainer.pkg
+Use cWebDragDropHelper.pkg
+Use cWebAppUserDataDictionary.dd
+Use cWebWidgetConfigurationWizard.pkg
+Use cWebButton.pkg
+Use cWebCardContainer.pkg
+Use cWebCard.pkg
+Use cWebHorizontalLine.pkg
+
+Use WidgetFilterAndDateFormatHandler.wo
+
+Use WidgetTimezone.wo
+Use WidgetButton.wo
+Use WidgetTile.wo
+Use WidgetChart.wo
+Use WidgetList.wo
+
+Use WidgetChartInternalFilter.wo
+Use WidgetListInternalFilter.wo
+Use WidgetTileInternalFilter.wo
+
+Use cWebWidgetPalette.pkg
+
+Object oDashboard is a cWebView
+    Set psCaption to "Dashboard"
+    Set pbServerOnShow to True
+    Set pbFillHeight to True    
+    Set peViewType to vtUndefined
+    Set pbShowCaption to False
+    Set peStateMode to vsmOff
+    Set psBodyCSSClass to "WidgetsDashboard"
+    
+    Register_Object oWidgetFilterHandler
+
+    { WebProperty = Client } 
+    Property String psWidgetDateFilter
+
+    Object oWebMainPanel is a cWebPanel
+        Set piColumnCount to 24
+
+        Object oDivider is a cWebHorizontalLine
+            Set psCSSClass to "TabLine"
+        End_Object
+
+        Object oTabButton_1 is a cWebHtmlBox
+            Set psHtml to "<a data-ServerOnClick='Open_Tab'><div>Global Filter</div></a>"
+            Set pbServerOnClick to True
+            Set psCSSClass to "TabButton Selected"
+            Set piHeight to 36
+            Set pbScroll to False
+            Set piColumnSpan to 2
+            
+            Procedure OnClick String sId String sParam
+                Send Show of oCardTab1
+                WebSet pbRender of oWidgetFilter to True
+                WebSet psCSSClass of oTabButton_1 to "TabButton Selected"
+                WebSet psCSSClass of oTabButton_2 to "TabButton"
+            End_Procedure
+        End_Object
+        
+        Object oTabButton_2 is a cWebHtmlBox
+            Set psHtml to "<a data-ServerOnClick='Open_Tab'><div>Internal Filter</div></a>"
+            Set pbServerOnClick to True
+            Set piColumnIndex to 1
+            Set psCSSClass to "TabButton"
+            Set piHeight to 36
+            Set pbScroll to False
+            Set piColumnSpan to 2
+            Set piColumnIndex to 2
+            
+            Procedure OnClick String sId String sParam
+                Send Show of oCardTab2
+                WebSet pbRender of oWidgetFilter to False
+                WebSet psCSSClass of oTabButton_1 to "TabButton"
+                WebSet psCSSClass of oTabButton_2 to "TabButton Selected"
+            End_Procedure
+        End_Object
+        
+        Procedure UpdateFilterDetail String sFilter
+            DateTime dtStart dtEnd dtCompStart dtCompEnd
+            String sDetail sMonth
+            Integer iYear iCompYear
+            Integer iWeek iCompWeek
+            Integer iMonth iCompMonth
+        
+            Get StartDateByFilterType of oWidgetFilterAndDateFormatHandler sFilter to dtStart
+            Get EndDateByFilterType   of oWidgetFilterAndDateFormatHandler sFilter to dtEnd
+            Get CompareStartDateByFilterType of oWidgetFilterAndDateFormatHandler sFilter to dtCompStart
+            Get CompareEndDateByFilterType of oWidgetFilterAndDateFormatHandler sFilter to dtCompEnd
+        
+            Case Begin
+                Case (sFilter = "year")
+                    Move (DateGetYear(dtStart))     to iYear
+                    Move (DateGetYear(dtCompStart)) to iCompYear
+        
+                    Move (SFormat("Compares: %1 to %2", iYear, iCompYear)) to sDetail
+                    Case Break
+        
+                Case (sFilter = "month")
+                    Move (DateGetYear(dtStart))     to iYear
+                    Move (DateGetYear(dtCompStart)) to iCompYear
+                    Move (DateGetMonth(dtStart))    to iMonth
+                    Get DateGetMonthShortName of oWidgetFilterAndDateFormatHandler iMonth to sMonth
+        
+                    Move (SFormat("Compares: %1 %2 to %1 %3", sMonth, iYear, iCompYear)) to sDetail
+                    Case Break
+        
+                Case (sFilter = "week")
+                    Move (DateGetWeekOfYearISO(dtStart))     to iWeek
+                    Move (DateGetWeekOfYearISO(dtCompStart)) to iCompWeek
+                    Move (DateGetYear(dtStart))     to iYear
+                    Move (DateGetYear(dtCompStart)) to iCompYear
+        
+                    Move (SFormat("Compares: Week %1 (%2) to Week %3 (%4)", iWeek, iYear, iCompWeek, iCompYear)) to sDetail
+                    Case Break
+        
+                Case (sFilter = "last_year")
+                    Move (DateGetYear(dtStart))     to iYear
+                    Move (DateGetYear(dtCompStart)) to iCompYear
+        
+                    Move (SFormat("Compares: %1 to %2", iYear, iCompYear)) to sDetail
+                    Case Break
+        
+                Case (sFilter = "last_month")
+                    Move (DateGetMonth(dtStart)) to iMonth
+                    Move (DateGetYear(dtStart))  to iYear
+                    Move (DateGetYear(dtCompStart)) to iCompYear
+                    Get DateGetMonthShortName of oWidgetFilterAndDateFormatHandler iMonth to sMonth
+                    
+                    Move (SFormat("Compares: %1 %2 to %1 %3", sMonth, iYear, iCompYear)) to sDetail
+                    Case Break
+        
+                Case (sFilter = "last_week")
+                    Move (DateGetWeekOfYearISO(dtStart))     to iWeek
+                    Move (DateGetWeekOfYearISO(dtCompStart)) to iCompWeek
+                    Move (DateGetYear(dtStart))     to iYear
+                    Move (DateGetYear(dtCompStart)) to iCompYear
+        
+                    Move (SFormat("Compares: Week %1 (%2) to Week %3 (%4)", iWeek, iYear, iCompWeek, iCompYear)) to sDetail
+                    Case Break
+        
+                // fallback (if ever needed)
+                Case Else
+                    Move (SFormat("Compares: %1 - %2 to %3 - %4", dtStart, dtEnd, dtCompStart, dtCompEnd)) to sDetail
+            Case End
+        
+            WebSet psCaption of oFilterCompareDetailLabel to sDetail
+        End_Procedure
+
+        Object oResetWidgetsButton is a cWebButton
+            Set psCSSClass to "ResetDashboardBtn"
+            Set psBackgroundColor to "unset"
+            Set psCaption to "Reset Dashboard"
+            Set pbServerOnClick to True
+            Set piColumnIndex to 17
+            Set piColumnSpan to 3
+            
+            Procedure OnClick
+                Handle hoWidgetCon
+                
+                Get CurrentActiveWidgetContainer to hoWidgetCon
+                Send ResetToDefaultConfiguration of hoWidgetCon
+            End_Procedure
+        End_Object
+
+        Object oCancelWidgetsButton is a cWebButton
+            Set psCSSClass to "CancelDashboardBtn"
+            Set psBackgroundColor to "var(--df-ErrorRegular)"
+            Set psCaption to "Cancel"
+            Set pbServerOnClick to True
+            Set piColumnIndex to 20
+            Set piColumnSpan to 2
+            
+            Procedure OnClick
+                Handle hoWidgetCon hoCurrentCard hoCard
+                
+                Get CurrentActiveWidgetContainer to hoWidgetCon
+                Send CancelChanges of hoWidgetCon
+                
+                Get CurrentCard of oCardContainer to hoCurrentCard
+                Get Object_Id of oCardTab1 to hoCard
+                
+                If (hoCurrentCard = hoCard) Begin
+                    WebSet pbRender of oFilterCompareDetailLabel to True                
+                    WebSet pbRender of oWidgetFilter to True
+                End
+                Else Begin
+                    WebSet pbRender of oFilterCompareDetailLabel to False                
+                    WebSet pbRender of oWidgetFilter to False
+                End
+            End_Procedure
+        End_Object
+        
+        Object oSaveWidgetsButton is a cWebButton
+            Set psCSSClass to "SaveDashboardBtn"
+            Set psBackgroundColor to "#749C75"
+            Set psCaption to "Save"
+            Set pbServerOnClick to True
+            Set piColumnIndex to 22
+            Set piColumnSpan to 2
+            
+            Procedure OnClick
+                Handle hoWidgetCon hoCurrentCard hoCard
+                
+                Get CurrentActiveWidgetContainer to hoWidgetCon
+                Send SaveConfiguration of hoWidgetCon
+                WebSet pbEditMode of hoWidgetCon to False
+                
+                Send ResyncTimers
+                
+                Get CurrentCard of oCardContainer to hoCurrentCard
+                Get Object_Id of oCardTab1 to hoCard
+                
+                If (hoCurrentCard = hoCard) Begin
+                    WebSet pbRender of oFilterCompareDetailLabel to True                
+                    WebSet pbRender of oWidgetFilter to True
+                End
+                Else Begin
+                    WebSet pbRender of oFilterCompareDetailLabel to False                
+                    WebSet pbRender of oWidgetFilter to False
+                End
+            End_Procedure
+        End_Object
+        
+        Object oFilterCompareDetailLabel is a cWebLabel
+            Set psCaption to ""
+            Set psCSSClass to "FilterDetail"
+            Set piColumnSpan to 8
+            Set piColumnIndex to 11
+            Set peAlign to alignRight
+        End_Object
+         
+        Object oWidgetFilter is a cWebCombo
+            Set piColumnSpan to 2
+            Set piColumnIndex to 19
+            Set pbShowLabel to False
+            Set pbServerOnChange to True
+           
+            Procedure OnFill
+                String sDisplayString
+                
+                Send AddComboItem "year" "This Year"
+                Send AddComboItem "month" "This Month"
+                Send AddComboItem "week" "This Week"
+                Send AddComboItem "last_year" "Last Year"
+                Send AddComboItem "last_month" "Last Month"
+                Send AddComboItem "last_week" "Last Week"  
+                
+                //Set default global filter value for widgets to use
+                WebSet psWidgetDateFilter of oDashboard to "year"   
+                Send UpdateFilterDetail "year"        
+            End_Procedure
+        
+            Procedure OnChange String sNewValue String sOldValue
+                WebSet psWidgetDateFilter of oDashboard to sNewValue
+                
+                Send UpdateFilterableWidgets  
+                Send UpdateFilterDetail sNewValue              
+            End_Procedure
+        End_Object
+        
+        Object oEditWidgetsButton is a cWebButton
+            Set psCaption to "Edit Dashboard"
+            Set pbServerOnClick to True
+            Set piColumnSpan to 3
+            Set piColumnIndex to 21
+            Set psCSSClass to "EditDashboardBtn"
+            Set psBackgroundColor to "#348EE6"
+            
+            Procedure OnClick
+                Handle hoWidgetCon
+                
+                Get CurrentActiveWidgetContainer to hoWidgetCon
+                
+                WebSet pbEditMode of hoWidgetCon to True  
+            End_Procedure
+        End_Object
+        
+        Object oCardContainer is a cWebCardContainer
+            Set piColumnSpan to 0
+            Set pbShowCaption to False
+            Set pbShowBorder to False
+            Set pbFillHeight to True
+            Set pbServerOnCardChange to True
+            
+            Object oCardTab1 is a cWebCard
+                Set pbShowCaption to False
+                Set pbScroll to True
+                Set pbFillHeight to True
+
+                Object oTab1Content is a cWebPanel
+                    Object oWidgetContainerPage1 is a cWebWidgetContainer
+                        Set pbShowEditButton to False
+                        Set pbShowEditMenu to False
+                        Set pbUseCustomConfigurationStorage to False
+                        Set pbServerOnToggleEditMode to True
+                        Set piColumnCount to 16
+                        Set piRowCount to 8
+                        Set pbAlwaysShowConfigureButton to True
+                        
+                        Procedure OnRegisterWidgets
+                            Send RegisterWidget (RefClass(cWidgetButton))
+                            Send RegisterWidget (RefClass(cWidgetTile))
+                            Send RegisterWidget (RefClass(cWidgetTimezone))
+                            Send RegisterWidget (RefClass(cWidgetChart))
+                            Send RegisterWidget (RefClass(cWidgetList))
+                        End_Procedure
+                        
+                        Procedure OnWidgetAdded tWidgetDef WidgetDef Handle hoWidgetClass 
+                            Send ShowWidgetConfiguration WidgetDef.sDynId True 
+                        End_Procedure 
+            
+                        Procedure OnToggleEditMode Boolean bEdit
+                            Forward Send OnToggleEditMode bEdit
+                            
+                            WebSet pbRender of oWidgetsPanelPage1 to bEdit
+                            
+                            If (bEdit) Begin
+                                WebSet pbRender of oEditWidgetsButton to False
+                                WebSet pbRender of oFilterCompareDetailLabel to False                
+                                WebSet pbRender of oWidgetFilter to False
+                                WebSet pbRender of oCancelWidgetsButton to True
+                                WebSet pbRender of oSaveWidgetsButton to True
+                                WebSet pbRender of oResetWidgetsButton to True
+                            End
+                            Else Begin
+                                WebSet pbRender of oEditWidgetsButton to True
+                                WebSet pbRender of oFilterCompareDetailLabel to True                
+                                WebSet pbRender of oWidgetFilter to True
+                                WebSet pbRender of oCancelWidgetsButton to False
+                                WebSet pbRender of oSaveWidgetsButton to False
+                                WebSet pbRender of oResetWidgetsButton to False
+                            End
+                        End_Procedure
+                        
+                        Object SelectLiga is a cWidgetTile
+                            Set piColumnSpan to 4
+                            Set piRowSpan to 2
+                        End_Object
+                        
+                        Object SelectEquipo is a cWidgetTile
+                            Set psTileType to "OrderTotals"
+                            Set piColumnIndex to 4
+                            Set piColumnSpan to 4
+                            Set piRowSpan to 2
+                        End_Object
+                        
+                        Object SelectJugador is a cWidgetTile
+                            Set psTileType to "LowInventory"
+                            Set piColumnIndex to 8
+                            Set piColumnSpan to 4
+                            Set piRowSpan to 2
+                        End_Object
+                        
+                        Object SelectEntrenador is a cWidgetTimezone
+                            Set piColumnIndex to 12
+                            Set piColumnSpan to 4
+                            Set piRowSpan to 2
+                        End_Object
+                        
+                        Object SelectPosicion is a cWidgetList
+                            Set piColumnSpan to 6
+                            Set piRowSpan to 5
+                            Set piRowIndex to 2
+                        End_Object
+                        
+                        Object oCustomers is a cWidgetList
+                            Set piColumnIndex to 6
+                            Set piColumnSpan to 6
+                            Set piRowSpan to 5
+                            Set psDataSet to "Customers"
+                            Set piRowIndex to 2
+                        End_Object
+                        
+                        Object oTimeWidget2 is a cWidgetTimezone
+                            Set piColumnIndex to 12
+                            Set piColumnSpan to 4
+                            Set piRowSpan to 2
+                            Set piRowIndex to 2
+                            Set psTimezoneKey to "Eastern Standard Time"
+                        End_Object
+                        
+                        Object oButtonInternalNav is a cWidgetButton
+                            Set piColumnIndex to 12
+                            Set piColumnSpan to 4
+                            Set piRowSpan to 1
+                            Set piRowIndex to 4
+                            Set psAction to "CustomerQuery"
+                        End_Object
+                        
+                        Object oButtonExternalNav is a cWidgetButton
+                            Set piColumnIndex to 12
+                            Set piColumnSpan to 4
+                            Set piRowSpan to 1
+                            Set piRowIndex to 5
+                            Set psUrl to "https://www.dataflex.dev/"
+                            Set peNavType to btNewTab
+                            Set psTitle to "DataFlex"
+                        End_Object
+                        
+                        Object oChart is a cWidgetChart
+                            Set piColumnSpan to 12
+                            Set piRowSPan to 6
+                            Set piRowIndex to 7
+                        End_Object
+
+                    End_Object
+                End_Object
+            
+                Object oWidgetsPanelPage1 is a cWebPanel
+                    Set piWidth to 250
+                    Set pbRender to False
+                    Set peRegion to prRight
+                    
+                    Object oWlWidgetsPage1 is a cWebWidgetPalette
+                        Set piColumnSpan to 2
+                        Set piColumnIndex to 10
+                        Set phoWidgetContainer to oWidgetContainerPage1
+                    End_Object
+                End_Object
+            End_Object
+
+            Object oCardTab2 is a cWebCard
+                Set pbShowCaption to False
+                Set pbScroll to True
+                Set pbFillHeight to True
+                
+                Object oPage2Content is a cWebPanel
+                    Object oWidgetContainerPage2 is a cWebWidgetContainer
+                        Set pbShowEditButton to False
+                        Set pbShowEditMenu to False
+                        Set pbUseCustomConfigurationStorage to False
+                        Set pbServerOnToggleEditMode to True
+                        Set pbAlwaysShowConfigureButton to True
+                        
+                        Procedure OnRegisterWidgets
+                            Send RegisterWidget (RefClass(cWidgetButton))
+                            Send RegisterWidget (RefClass(cWidgetTimezone))
+                            Send RegisterWidget (RefClass(cWidgetTileInternalFilter))
+                            Send RegisterWidget (RefClass(cWidgetChartInternalFilter))
+                            Send RegisterWidget (RefClass(cWidgetListInternalFilter))
+                        End_Procedure
+                        
+                        Procedure OnWidgetAdded tWidgetDef WidgetDef Handle hoWidgetClass 
+                            Send ShowWidgetConfiguration WidgetDef.sDynId True 
+                        End_Procedure 
+    
+                        Procedure OnToggleEditMode Boolean bEdit
+                            Forward Send OnToggleEditMode bEdit
+                            
+                            WebSet pbRender of oWidgetsPanelPage2 to bEdit
+                            
+                            If (bEdit) Begin
+                                WebSet pbRender of oEditWidgetsButton to False
+                                WebSet pbRender of oCancelWidgetsButton to True
+                                WebSet pbRender of oSaveWidgetsButton to True
+                                WebSet pbRender of oResetWidgetsButton to True
+                            End
+                            Else Begin
+                                WebSet pbRender of oEditWidgetsButton to True
+                                WebSet pbRender of oCancelWidgetsButton to False
+                                WebSet pbRender of oSaveWidgetsButton to False
+                                WebSet pbRender of oResetWidgetsButton to False
+                            End
+                        End_Procedure      
+                        
+                        Object oSalesPersons is a cWidgetListInternalFilter
+                            Set piColumnSpan to 6
+                            Set piRowSpan to 5
+                            Set piRowIndex to 0
+                        End_Object
+                    End_Object
+                End_Object
+            
+                Object oWidgetsPanelPage2 is a cWebPanel
+                    Set piWidth to 250
+                    Set pbRender to False
+                    Set peRegion to prRight
+                    Set psCSSClass to "WidgetPanel"
+                    
+                    Object oWlWidgetsPage2 is a cWebWidgetPalette
+                        Set piColumnSpan to 2
+                        Set piColumnIndex to 10
+                        Set phoWidgetContainer to oWidgetContainerPage2
+                    End_Object
+                End_Object
+            End_Object
+            
+            Procedure OnCardChange String sNewSelectedTab String sPrevSelectedTab
+                Boolean bEdit
+                Handle hoWrapper
+                
+                If (sPrevSelectedTab = "oCardTab1") Begin
+                    WebGet pbEditMode of oWidgetContainerPage1 to bEdit
+                    WebSet pbRender of oFilterCompareDetailLabel to False                
+                    WebSet pbRender of oWidgetFilter to False
+     
+                    If (bEdit) Begin
+                        Send SaveConfiguration of oWidgetContainerPage1
+                        WebSet pbEditMode of oWidgetContainerPage1 to False
+                    End                    
+                End
+                Else Begin
+                    WebGet pbEditMode of oWidgetContainerPage2 to bEdit
+                    WebSet pbRender of oFilterCompareDetailLabel to True                
+                    WebSet pbRender of oWidgetFilter to True
+                    
+                    If (bEdit) Begin
+                        Send SaveConfiguration of oWidgetContainerPage2
+                        WebSet pbEditMode of oWidgetContainerPage2 to False
+                    End 
+                End
+            End_Procedure
+        End_Object
+    End_Object
+    
+    Function CurrentActiveWidgetContainer Returns Handle
+        Handle hoCurrentCard hoWidgetCon
+        
+        Get CurrentCard of oCardContainer to hoCurrentCard
+        
+        If (hoCurrentCard = oCardTab1) Begin
+            Move (Object_Id(oWidgetContainerPage1)) to hoWidgetCon
+        End
+        Else Begin
+            Move (Object_Id(oWidgetContainerPage2)) to hoWidgetCon
+        End
+        
+        Function_Return hoWidgetCon
+    End_Function
+    
+    Function CurrentActiveInternalWidgetContainer Returns Handle
+        Handle hoCurrentCard hoWrapper
+        
+        Get CurrentCard of oCardContainer to hoCurrentCard
+        
+        If (hoCurrentCard = oCardTab1) Begin
+            Get phoInternalWidgetContainer of oWidgetContainerPage1 to hoWrapper
+        End
+        Else Begin
+            Get phoInternalWidgetContainer of oWidgetContainerPage2 to hoWrapper
+        End
+        
+        Function_Return hoWrapper
+    End_Function
+    
+    Procedure UpdateFilterableWidgets
+        Handle hoChild hoWidget hoWidgetContainerInternal
+        Integer iDynamicObjects iCount iSizeOfArray iPos
+        String sWidgetName
+        Boolean bFilterable
+        tWebDynamicObject[] dynamicObjects
+        
+        Get CurrentActiveInternalWidgetContainer to hoWidgetContainerInternal
+        WebGet paDynamicObjects of hoWidgetContainerInternal to dynamicObjects
+        
+        Move (SizeOfArray(dynamicObjects)-1) to iSizeOfArray
+        
+        For iCount from 0 to iSizeOfArray
+            Move dynamicObjects[iCount].sId to sWidgetName
+            Move (Pos(".", sWidgetName)) to iPos
+            
+            If (iPos = 0) Begin
+                Get WidgetInstance of hoWidgetContainerInternal sWidgetName to hoWidget
+                
+                If (IsObjectOfClass (hoWidget, (RefClass(cSampleWidget)))) Begin
+                    Get pbFilterable of hoWidget to bFilterable
+                    
+                    If (bFilterable) Begin
+                        Send Update of hoWidget
+                    End
+                End
+            End
+        Loop
+    End_Procedure
+    
+    Procedure ResyncTimers
+        Handle hoChild hoWidget hoWidgetContainerInternal
+        Integer iDynamicObjects iCount iSizeOfArray iPos
+        String sWidgetName
+        tWebDynamicObject[] dynamicObjects
+        
+        Get CurrentActiveInternalWidgetContainer to hoWidgetContainerInternal
+        WebGet paDynamicObjects of hoWidgetContainerInternal to dynamicObjects
+        
+        Move (SizeOfArray(dynamicObjects)-1) to iSizeOfArray
+        
+        For iCount from 0 to iSizeOfArray
+            Move dynamicObjects[iCount].sId to sWidgetName
+            Move (Pos(".", sWidgetName)) to iPos
+            
+            If (iPos = 0) Begin
+                Get WidgetInstance of hoWidgetContainerInternal sWidgetName to hoWidget
+               
+               If (IsObjectOfClass (hoWidget, (RefClass(cWidgetTimezone)))) Begin
+                    Send OnInitializeWidget of hoWidget
+               End
+            End
+        Loop
+        
+    End_Procedure
+    
+    Function WidgetDateFilter Returns String
+        String sFilter
+        
+        WebGet psWidgetDateFilter to sFilter
+        Function_Return sFilter
+    End_Function
+
+    Procedure OnLoad
+        Forward Send OnLoad
+        
+        Send LoadConfiguration of oWidgetContainerPage1
+        Send GridRefresh of oWlWidgetsPage1
+        Send LoadConfiguration of oWidgetContainerPage2
+        Send GridRefresh of oWlWidgetsPage2
+        
+        WebSet pbRender of oResetWidgetsButton to False
+        WebSet pbRender of oSaveWidgetsButton to False
+        WebSet pbRender of oCancelWidgetsButton to False
+        
+    End_Procedure
+End_Object

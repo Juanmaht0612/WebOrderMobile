@@ -1,0 +1,50 @@
+{
+    "dependencies": {
+        "DataFlex-dev/Charts": {
+            "ref": "1.0.0"
+        },
+        "DataFlex-dev/Conversions": {
+            "ref": "1.0.0"
+        },
+        "DataFlex-dev/DataFlex Reports Demo Core": {
+            "ref": "26.0.2"
+        },
+        "DataFlex-dev/DataFlex Reports Flat Desktop Theme": {
+            "ref": "26.0.3"
+        },
+        "DataFlex-dev/DataFlex Reports Flat Touch Theme": {
+            "ref": "26.0.2"
+        },
+        "DataFlex-dev/DataFlex Reports Material Theme": {
+            "ref": "26.0.2"
+        },
+        "DataFlex-dev/DataFlex Reports Web Demo": {
+            "ref": "26.0.1"
+        },
+        "DataFlex-dev/DataFlex Reports Web Shared": {
+            "ref": "26.0.15"
+        },
+        "DataFlex-dev/DataFlex Reports Windows and Web Shared": {
+            "ref": "26.0.7"
+        },
+        "DataFlex-dev/DateTime": {
+            "ref": "1.0.1"
+        },
+        "DataFlex-dev/Web UI": {
+            "ref": "1.0.56"
+        },
+        "DataFlex-dev/Web UI Flat Desktop Theme": {
+            "ref": "1.0.5"
+        },
+        "DataFlex-dev/Web UI Flat Touch Theme": {
+            "ref": "1.0.5"
+        },
+        "DataFlex-dev/Web UI Material Theme": {
+            "ref": "1.0.3"
+        },
+        "DataFlex-dev/Web UI Server": {
+            "ref": "1.0.56"
+        }
+    },
+    "lockVersion": "1.0.0"
+}

@@ -1,0 +1,22 @@
+{
+    "install": [
+        {
+            "hash": "T8U2D02M8MWDQGzK7UcOaqONEs1f8Zk+ufdyct17Knw=",
+            "origin": "AppHtml/DataFlexReports/CssThemes/Df_Flat_Touch/Integration.css"
+        },
+        {
+            "hash": "p4xvNGGIpxUtyr06xrYkDic7HQPz834wOJUtxwhJVME=",
+            "origin": "AppHtml/DataFlexReports/CssThemes/Df_Flat_Touch/Previewer.css"
+        },
+        {
+            "hash": "p4xvNGGIpxUtyr06xrYkDic7HQPz834wOJUtxwhJVME=",
+            "origin": "AppHtml/DataFlexReports/CssThemes/Df_Flat_Touch/Previewer.css"
+        },
+        {
+            "hash": "T8U2D02M8MWDQGzK7UcOaqONEs1f8Zk+ufdyct17Knw=",
+            "origin": "AppHtml/DataFlexReports/CssThemes/Df_Flat_Touch/Integration.css"
+        }
+    ],
+    "upstream": "https://packages.dataflex.dev/api/v1/packages/DataFlex-dev/DataFlex%20Reports%20Flat%20Touch%20Theme",
+    "version": 1
+}
